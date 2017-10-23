@@ -18,8 +18,6 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
         [TestMethod]
         public void ShouldCreateUser()
         {
-            IEnumerable<Category> ret;
-            
             //arrange
             var user = new User
             {
@@ -54,6 +52,7 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
             user = usersRepository.Create(user);
 
             _tempUsers.Add(user.Id);
+            
 
             categoriesRepository.Create(user.Id, category);
             user = usersRepository.Get(user.Id);
@@ -68,7 +67,7 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
             foreach (var id in _tempUsers)
                 new UsersRepository(ConnectionString, new CategoriesRepository(ConnectionString)).Delete(id);
 
-            new UsersRepository(ConnectionString, new CategoriesRepository(ConnectionString)).Delete(Guid.Parse("150A896A-877B-4AFF-8FEF-A8F7879DB7F3"));
+            //new UsersRepository(ConnectionString, new CategoriesRepository(ConnectionString)).Delete(Guid.Parse("150A896A-877B-4AFF-8FEF-A8F7879DB7F3"));
            
         }
     }

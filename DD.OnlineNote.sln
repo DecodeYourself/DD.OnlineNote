@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DD.OnlineNote.DataLayer.SQL
 		{3977CBD8-BBE6-45B0-B8F4-098F1E4D18EA} = {3977CBD8-BBE6-45B0-B8F4-098F1E4D18EA}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DD.OnlineNote.WebApi", "DD.OnlineNote.WebApi\DD.OnlineNote.WebApi.csproj", "{1B73FB05-6A27-40E1-BFAA-0AA90F776EC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DD.OnlineNote.WebApi.Tests", "DD.OnlineNote.WebApi.Tests\DD.OnlineNote.WebApi.Tests.csproj", "{AB7E612B-D10D-419D-B48D-966B69281014}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +45,14 @@ Global
 		{36230210-C904-4EA9-81CF-4CFFF36A5678}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36230210-C904-4EA9-81CF-4CFFF36A5678}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36230210-C904-4EA9-81CF-4CFFF36A5678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B73FB05-6A27-40E1-BFAA-0AA90F776EC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B73FB05-6A27-40E1-BFAA-0AA90F776EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B73FB05-6A27-40E1-BFAA-0AA90F776EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B73FB05-6A27-40E1-BFAA-0AA90F776EC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB7E612B-D10D-419D-B48D-966B69281014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB7E612B-D10D-419D-B48D-966B69281014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB7E612B-D10D-419D-B48D-966B69281014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB7E612B-D10D-419D-B48D-966B69281014}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
