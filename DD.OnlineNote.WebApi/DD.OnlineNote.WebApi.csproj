@@ -134,7 +134,20 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DD.OnlineNote.DataLayer.SQL\DD.OnlineNote.DataLayer.SQL.csproj">
+      <Project>{3977cbd8-bbe6-45b0-b8f4-098f1e4d18ea}</Project>
+      <Name>DD.OnlineNote.DataLayer.SQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DD.OnlineNote.DataLayer\DD.OnlineNote.DataLayer.csproj">
+      <Project>{79df0b80-9aa3-4b1b-8cce-2ec46cf5b8e0}</Project>
+      <Name>DD.OnlineNote.DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DD.OnlineNote.Model\DD.OnlineNote.Model.csproj">
+      <Project>{fe186c9a-e9b1-45af-8a78-17dcc1c62f36}</Project>
+      <Name>DD.OnlineNote.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

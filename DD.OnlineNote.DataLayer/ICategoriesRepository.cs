@@ -11,7 +11,9 @@ namespace DD.OnlineNote.DataLayer
     public interface ICategoriesRepository
     {
         Category Create(Guid userId, string name);
+        void Delete(Guid categoriesId);
         IEnumerable<Category> GetUserCategories(Guid userId);
+        Category Get(Guid categoriesId);
     }
 
 }

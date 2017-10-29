@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="orderedtest1" storage="d:\c# learn\dd.onlinenote\dd.onlinenote.datalayer.sql.tests\orderedtest1.orderedtest" id="4c87fb70-48f3-414d-88fd-f2cdeefaaead" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="d21b8825-efd4-0c52-2150-9c8e55725292" name="CreateCategoriesTest" storage="bin\debug\dd.onlinenote.datalayer.sql.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="dffcd773-043b-cd55-e8a9-545bbcff9857" name="GetUserByWebAPI" storage="..\dd.onlinenote.webapi.tests\bin\debug\dd.onlinenote.webapi.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="09421563-0f9b-0293-4171-ef9a84eb869d" name="ShouldCreateUserAndAddCategory" storage="bin\debug\dd.onlinenote.datalayer.sql.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="cfc529da-5793-f833-867f-d6a827a344c7" name="ShouldCreateUser" storage="bin\debug\dd.onlinenote.datalayer.sql.tests.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

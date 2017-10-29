@@ -1,6 +1,7 @@
 ﻿using System;
 using DD.OnlineNote.Model;
 using System.Data.SqlClient;
+using System.Net;
 
 namespace DD.OnlineNote.DataLayer.SQL
 {
@@ -11,6 +12,8 @@ namespace DD.OnlineNote.DataLayer.SQL
 
         public UsersRepository(string connectionString,ICategoriesRepository categoriesRepository)
         {
+            if (connectionString == null)
+                throw new ArgumentException(nameof(connectionString));
             if (categoriesRepository == null)
                 throw new ArgumentException(nameof(categoriesRepository));
 
@@ -41,6 +44,9 @@ namespace DD.OnlineNote.DataLayer.SQL
                 sqlConnection.Open();
                 using (var command = sqlConnection.CreateCommand())
                 {
+                    //SqlTransaction transaction;
+                    //transaction = sqlConnection.BeginTransaction("Delete");
+
                     command.CommandText = "delete from Users where id = @id";
                     command.Parameters.AddWithValue("@id", id);
                     command.ExecuteNonQuery();
