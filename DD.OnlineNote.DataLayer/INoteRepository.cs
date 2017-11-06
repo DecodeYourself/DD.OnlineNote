@@ -10,8 +10,9 @@ namespace DD.OnlineNote.DataLayer
     public interface INoteRepository
     {
         Note Create(Note note);
-        void Delete(Guid id);
+        bool Delete(Guid Noteid);
         IEnumerable<Note> GetUserNotes(Guid userId);
         Note UpdateNote(Note note);
+        IEnumerable<User> GetSharedUsers(Guid noteId);
     }
 }

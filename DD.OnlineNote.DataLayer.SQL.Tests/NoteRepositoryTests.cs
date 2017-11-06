@@ -10,10 +10,10 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
     /// Summary description for NoteRepositoryTests
     /// </summary>
     [TestClass]
-    public class NoteRepositoryTests : INoteRepository
+    public class NoteRepositoryTests 
     {
         private const string _connectionString = @"Data Source=localhost\SQLFORCODING;Initial Catalog=OnlineNote;Integrated Security=true";
-        private readonly List<Guid> _noteIdTodelete = new List<Guid>();
+        private static List<Note> _noteIdTodelete = new List<Note>();
 
         #region Additional test attributes
         //
@@ -37,33 +37,60 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
         //
         #endregion
 
-       
-        public void TestMethod1()
+      
+        [TestMethod]
+        public void Create()
         {
-            //
-            // TODO: Add test logic here
-            //
+            User _user = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Create(new User { Name = "TestUser123" });
+            Category _category = new CategoriesRepository(_connectionString).Create(_user.Id, $"Category123 {_user.Name}");
+
+           
+            Note testNote = new Note
+            {
+                Title = "TestTitle24345",
+                Content = "TestContent24345",
+                Owner = _user,
+                DateCreated = DateTime.Now,
+                DateChanged = DateTime.Now,
+                Categories = new CategoriesRepository(_connectionString).GetUserCategories(_user.Id),
+                SharedNote = null
+            };
+            var noteToSQL = new NoteRepository(_connectionString).Create(testNote);
+            _noteIdTodelete.Add(noteToSQL);
+
+            Assert.AreEqual(testNote.Owner, noteToSQL.Owner);
+            
+        }
+        [TestMethod]
+        public void Delete()
+        {
+            Assert.IsTrue(new NoteRepository(_connectionString).Delete(_noteIdTodelete[0].Id));
+        }
+        [TestMethod]
+        public void GetUserNotes()
+        {
+            IEnumerable<Note> UserNotes = new NoteRepository(_connectionString).GetUserNotes(_noteIdTodelete[0].Owner.Id);
+            foreach (Note item in UserNotes)
+            {
+                Assert.IsTrue(item.Owner.Id == _noteIdTodelete[0].Owner.Id);
+            }
+        }
+        [TestMethod]
+        public void UpdateNote()
+        {
+            Assert.AreEqual(true, false);
+        }
+        //[TestCleanup]
+        public void CleanData()
+        {
+            //foreach (var id in _noteIdTodelete)
+            //    new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Delete(id);
+
         }
 
-        [TestMethod]
-        public Note Create(Note note)
-        {
-            throw new NotImplementedException();
-        }
-        [TestMethod]
-        public void Delete(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-        [TestMethod]
-        public IEnumerable<Note> GetUserNotes(Guid userId)
-        {
-            throw new NotImplementedException();
-        }
-        [TestMethod]
-        public Note UpdateNote(Note note)
-        {
-            throw new NotImplementedException();
-        }
+        //public IEnumerable<User> GetSharedUsers(Guid noteId)
+        //{
+        //    return new NoteRepository().GetSharedUsers()
+        //}
     }
 }

@@ -39,6 +39,8 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
         [TestMethod]
         public void ShouldCreateUserAndAddCategory()
         {
+            
+
             //arrange
             var user = new User
             {
@@ -67,8 +69,6 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
             foreach (var id in _tempUsers)
                 new UsersRepository(ConnectionString, new CategoriesRepository(ConnectionString)).Delete(id);
 
-            //new UsersRepository(ConnectionString, new CategoriesRepository(ConnectionString)).Delete(Guid.Parse("150A896A-877B-4AFF-8FEF-A8F7879DB7F3"));
-           
         }
     }
 }
