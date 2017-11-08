@@ -78,7 +78,28 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
         [TestMethod]
         public void UpdateNote()
         {
-            Assert.AreEqual(true, false);
+            User _user = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Create(new User { Name = "TestUserUpdater" });
+            Category _category = new CategoriesRepository(_connectionString).Create(_user.Id, $"CategoryUpdater {_user.Name}");
+
+
+            Note testNote = new Note
+            {
+                Title = "TestTitleUpdate",
+                Content = "TestContentUpdate",
+                Owner = _user,
+                DateCreated = DateTime.Now,
+                DateChanged = DateTime.Now,
+                Categories = new CategoriesRepository(_connectionString).GetUserCategories(_user.Id),
+                SharedNote = null
+            };
+            var noteToSQL = new NoteRepository(_connectionString).Create(testNote);
+
+            noteToSQL.Title = "SuccessUpdate";
+            noteToSQL.Content = "eeee";
+
+            var noteAfterUpdate = new NoteRepository(_connectionString).UpdateNote(noteToSQL);
+
+            Assert.AreEqual(noteToSQL.Content, noteAfterUpdate.Content);
         }
         //[TestCleanup]
         public void CleanData()

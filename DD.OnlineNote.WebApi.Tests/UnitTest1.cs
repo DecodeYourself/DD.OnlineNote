@@ -9,7 +9,7 @@ namespace DD.OnlineNote.WebApi.Tests
         [TestMethod]
         public void GetUserByWebAPI()
         {
-            
+            throw new NotImplementedException();
         }
     }
 }

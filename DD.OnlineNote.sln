@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DD.OnlineNote.WebApi", "DD.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DD.OnlineNote.WebApi.Tests", "DD.OnlineNote.WebApi.Tests\DD.OnlineNote.WebApi.Tests.csproj", "{AB7E612B-D10D-419D-B48D-966B69281014}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DD.OnlineNote.Logger", "DD.OnlineNote.Logger\DD.OnlineNote.Logger.csproj", "{09832CE9-3454-42D4-A4CD-8FF7F5522D5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{AB7E612B-D10D-419D-B48D-966B69281014}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB7E612B-D10D-419D-B48D-966B69281014}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB7E612B-D10D-419D-B48D-966B69281014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09832CE9-3454-42D4-A4CD-8FF7F5522D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09832CE9-3454-42D4-A4CD-8FF7F5522D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09832CE9-3454-42D4-A4CD-8FF7F5522D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09832CE9-3454-42D4-A4CD-8FF7F5522D5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
