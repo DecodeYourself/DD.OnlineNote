@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -41,14 +42,14 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
         [TestMethod]
         public void Create()
         {
-            User _user = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Create(new User { Name = "TestUser123" });
-            Category _category = new CategoriesRepository(_connectionString).Create(_user.Id, $"Category123 {_user.Name}");
-
+            User _user = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Create(new User { Name = "Petya" });
+            Category _category = new CategoriesRepository(_connectionString).Create(_user.Id, $"Category {_user.Name}");
+            
            
             Note testNote = new Note
             {
-                Title = "TestTitle24345",
-                Content = "TestContent24345",
+                Title = $"TestTitle {DateTime.Now.ToShortTimeString()}",
+                Content = $"TestContent {DateTime.Now.ToShortTimeString()}",
                 Owner = _user,
                 DateCreated = DateTime.Now,
                 DateChanged = DateTime.Now,
@@ -81,7 +82,7 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
             User _user = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Create(new User { Name = "TestUserUpdater" });
             Category _category = new CategoriesRepository(_connectionString).Create(_user.Id, $"CategoryUpdater {_user.Name}");
 
-
+            
             Note testNote = new Note
             {
                 Title = "TestTitleUpdate",
