@@ -11,12 +11,24 @@ namespace DD.OnlineNote.WPF
 {
     public class ServiceProvider
     {
+        private static ServiceProvider instance;
         private readonly HttpClient _client;
-        public ServiceProvider(string connectionString)
+
+        private ServiceProvider(string ConnectionString)
         {
             _client = new HttpClient();
-            _client.BaseAddress = new Uri(connectionString);
+            _client.BaseAddress = new Uri(ConnectionString);
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        
+        public static ServiceProvider GetProvider(string ConnectionString)
+        {
+            if(instance == null)
+                instance = new ServiceProvider(ConnectionString);
+            
+
+            return instance;
         }
     }
 }

@@ -21,3 +21,16 @@
 2017-11-12 02:01:38.6105|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
 2017-11-12 02:01:58.3982|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
 2017-11-12 02:03:07.6214|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 12:25:46.0135|INFO|DD.OnlineNote.Logger.Log|Получение пользователя с id: 66298707-06c1-4a1e-a1b4-cf0966b39048
+2017-11-12 14:38:34.5754|ERROR|DD.OnlineNote.Logger.Log|Ошибка: ну нет функционала для FromBody, ну хз как с ним работать
+2017-11-12 14:38:34.6354|ERROR|DD.OnlineNote.Logger.Log|Ошибка: ну нет функционала для FromBody, ну хз как с ним работать
+2017-11-12 14:45:11.3291|ERROR|DD.OnlineNote.Logger.Log|Какая то дичь: Ссылка на объект не указывает на экземпляр объекта.
+2017-11-12 14:48:03.0363|ERROR|DD.OnlineNote.Logger.Log|Какая то дичь: Ссылка на объект не указывает на экземпляр объекта.
+2017-11-12 14:52:24.8714|INFO|DD.OnlineNote.Logger.Log|Запрос пользователей с доступом к заметке с id: 66298707-06c1-4a1e-a1b4-cf0966b39048
+2017-11-12 16:07:19.8887|INFO|DD.OnlineNote.Logger.Log|Запрос категорий с  id: 34d93987-c235-47c5-9e5f-0c54850010d7
+2017-11-12 16:07:48.5240|INFO|DD.OnlineNote.Logger.Log|Запрос категорий с  id: 34d93987-c235-47c5-9e5f-0c54850010d7
+2017-11-12 16:10:19.4850|INFO|DD.OnlineNote.Logger.Log|Запрос категорий с  id: 6eee3fc7-3a7e-4aad-9157-41221298cc91
+2017-11-12 16:11:03.2707|INFO|DD.OnlineNote.Logger.Log|Создание категории с названием: Category from Insomnia
+2017-11-12 16:11:46.8741|INFO|DD.OnlineNote.Logger.Log|Удаление категории с id: acaeef9d-0f1c-4d9d-8190-d93357fdef58
+2017-11-12 16:12:14.8221|INFO|DD.OnlineNote.Logger.Log|Получение категории с id
+2017-11-12 16:12:51.9978|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с id: 6eee3fc7-3a7e-4aad-9157-41221298cc91

@@ -20,7 +20,7 @@ namespace DD.OnlineNote.WPF
     /// </summary>
     public partial class LoginWindow : Window
     {
-        
+        private ServiceProvider provider;
 
         public LoginWindow()
         {
@@ -29,12 +29,21 @@ namespace DD.OnlineNote.WPF
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(txtLogin.Text))
+            {
+                MessageBox.Show("Заполните имя пользователя");
+                return;
+            }
 
         }
 
         private void btnRegistration_Click(object sender, RoutedEventArgs e)
         {
-
+            if (string.IsNullOrEmpty(txtLogin.Text))
+            {
+                MessageBox.Show("Заполните имя пользователя");
+                return;
+            }
         }
     }
 }

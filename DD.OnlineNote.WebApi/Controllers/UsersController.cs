@@ -52,7 +52,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/users/{id}/categories")]
         public IEnumerable<Category> GetUserCategories(Guid id)
         {
-            Logger.Log.Instance.Info("Получение пользователя с id: {0}", id);
+            Logger.Log.Instance.Info("Получение категорий пользователя с id: {0}", id);
             return _usersRepository.Get(id).Categories;
         }
     }

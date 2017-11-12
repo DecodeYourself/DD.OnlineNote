@@ -20,6 +20,7 @@ namespace DD.OnlineNote.WebApi.Controllers
             _noteRepository = new NoteRepository(_connectionString);
         }
 
+        [WebExceptionFilters]
         [HttpPost]
         [Route("api/note/Create")]
         public Note Create(Note note)
@@ -28,32 +29,36 @@ namespace DD.OnlineNote.WebApi.Controllers
             return _noteRepository.Create(note);
         }
 
+        [WebExceptionFilters]
         [HttpDelete]
         [Route("api/note/{noteId}")]
         public bool Delete(Guid noteId)
         {
+            
             Logger.Log.Instance.Info("Удаление заметки с id: {0}", noteId);
             return _noteRepository.Delete(noteId);
         }
 
+        [WebExceptionFilters]
         [HttpGet]
-        [Route("api/note/getusernotes")]
+        [Route("api/note/getusernotes/{userId}")]
         public IEnumerable<Note> GetUserNotes(Guid userId)
         {
-            Logger.Log.Instance.Info("Запрос заметок пользователя с  id: {0}", userId);
+            Logger.Log.Instance.Info("Запрос заметок пользователя с id: {0}", userId);
             return _noteRepository.GetUserNotes(userId);
         }
-
+        [WebExceptionFilters]
         [HttpPost]
         [Route("api/note")]
         public Note UpdateNote(Note note)
         {
             Logger.Log.Instance.Info("Обновление заметки с id", note.Id);
-            return _noteRepository.UpdateNote(note);
+            return _noteRepository.UpdateNote(note);         
         }
+        [WebExceptionFilters]
         [HttpGet]
-        [Route("api/note/GetSharedUsers")]
-        public IEnumerable<User> GetSharedUsers(Guid noteId)
+        [Route("api/note/GetSharedUsers/{Id}")]
+        public IEnumerable<User> GetSharedUsers([FromBody]Guid noteId)
         {
             Logger.Log.Instance.Info("Запрос пользователей с доступом к заметке с id: {0}", noteId);
             return _noteRepository.GetSharedUsers(noteId);
