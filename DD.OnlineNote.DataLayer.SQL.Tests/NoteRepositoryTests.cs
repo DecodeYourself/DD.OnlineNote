@@ -42,14 +42,14 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
         [TestMethod]
         public void Create()
         {
-            User _user = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Create(new User { Name = "Petya" });
+            User _user = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Create(new User { Name = "AzureTestUser" });
             Category _category = new CategoriesRepository(_connectionString).Create(_user.Id, $"Category {_user.Name}");
             
            
             Note testNote = new Note
             {
-                Title = $"TestTitle {DateTime.Now.ToShortTimeString()}",
-                Content = $"TestContent {DateTime.Now.ToShortTimeString()}",
+                Title = $"NewTitle {DateTime.Now.ToShortTimeString()}",
+                Content = $"NewContent {DateTime.Now.ToShortTimeString()}",
                 Owner = _user,
                 DateCreated = DateTime.Now,
                 DateChanged = DateTime.Now,

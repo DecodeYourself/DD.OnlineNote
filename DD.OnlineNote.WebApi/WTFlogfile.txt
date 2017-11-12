@@ -1,0 +1,23 @@
+2017-11-11 21:16:59.5663|DEBUG|DD.OnlineNote.Logger.Log|Запрос пользователя с id: 6eee3fc7-3a7e-4aad-9157-41221298cc91
+2017-11-12 00:13:02.1337|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: b9c77271-1dcd-4be1-826b-d36bf2b0a169
+2017-11-12 00:26:47.1089|INFO|DD.OnlineNote.Logger.Log|Запрос пользователя с id: 6eee3fc7-3a7e-4aad-9157-41221298cc91
+2017-11-12 00:27:00.8695|INFO|DD.OnlineNote.Logger.Log|Запрос пользователя с id: 6eee3fc7-3a7e-4aad-9157-41221298cc91
+2017-11-12 00:29:06.9763|INFO|DD.OnlineNote.Logger.Log|Создание пользователя с именем: InsomniaUser
+2017-11-12 00:29:53.7799|INFO|DD.OnlineNote.Logger.Log|Запрос пользователя с id: 10539a03-9622-4c98-82d9-504b04fe6822
+2017-11-12 00:43:51.6859|INFO|DD.OnlineNote.Logger.Log|Запрос пользователя с id: 10539a03-9622-4c98-82d9-504b04fe6822
+2017-11-12 00:46:24.1588|INFO|DD.OnlineNote.Logger.Log|Создание пользователя с именем: InsomniaUserForDelete
+2017-11-12 00:46:52.4919|INFO|DD.OnlineNote.Logger.Log|Удаление пользователя с id: 4aac9a10-5f62-43c5-8bcf-2dbcd42da52e
+2017-11-12 00:47:02.2102|INFO|DD.OnlineNote.Logger.Log|Запрос пользователя с id: 4aac9a10-5f62-43c5-8bcf-2dbcd42da52e
+2017-11-12 00:49:44.3903|INFO|DD.OnlineNote.Logger.Log|Запрос пользователя с id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 00:50:09.3610|INFO|DD.OnlineNote.Logger.Log|Создание пользователя с именем: InsomniaUserForDelete
+2017-11-12 00:50:28.3437|INFO|DD.OnlineNote.Logger.Log|Удаление пользователя с id: 106553ef-dd72-4f3c-8852-29f92489d7f2
+2017-11-12 00:51:30.3769|INFO|DD.OnlineNote.Logger.Log|Получение пользователя с id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 01:05:25.6153|INFO|DD.OnlineNote.Logger.Log|Запрос пользователей с доступом к заметке с id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 01:07:51.7692|INFO|DD.OnlineNote.Logger.Log|Запрос пользователей с доступом к заметке с id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 01:10:30.6225|INFO|DD.OnlineNote.Logger.Log|Запрос пользователей с доступом к заметке с id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 01:11:11.2601|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 01:12:21.8995|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 01:22:00.2858|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 02:01:38.6105|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 02:01:58.3982|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f
+2017-11-12 02:03:07.6214|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с  id: 2f4c4b79-733a-4ef3-9d90-580c375ed80f

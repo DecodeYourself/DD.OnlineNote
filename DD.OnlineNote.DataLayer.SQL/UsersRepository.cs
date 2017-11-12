@@ -66,8 +66,10 @@ namespace DD.OnlineNote.DataLayer.SQL
 
                     using (var reader = command.ExecuteReader())
                     {
+                        //if (!reader.Read())
+                        //    throw new ArgumentException($"Пользователь с id {id} не найден");
                         if (!reader.Read())
-                            throw new ArgumentException($"Пользователь с id {id} не найден");
+                            return null;
                         
                         var user = new User
                         {

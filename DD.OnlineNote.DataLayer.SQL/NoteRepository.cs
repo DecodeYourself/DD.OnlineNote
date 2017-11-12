@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace DD.OnlineNote.DataLayer.SQL
 {
-    public class NoteRepository
+    public class NoteRepository : INoteRepository
     {
         private readonly string _connectionString;
         public readonly IUserRepository _userRepository;
@@ -22,6 +22,8 @@ namespace DD.OnlineNote.DataLayer.SQL
         }
         public Note Create(Note note)
         {
+            if (note == null)
+                return null;
             using (var sqlConnection = new SqlConnection(_connectionString))
             {
                 sqlConnection.Open();
@@ -47,7 +49,7 @@ namespace DD.OnlineNote.DataLayer.SQL
 
         public bool Delete(Guid NoteId)
         {
-            using (var sqlConnection = new SqlConnection(_connectionString))
+           using (var sqlConnection = new SqlConnection(_connectionString))
             {
                 sqlConnection.Open();
                 using (var command = sqlConnection.CreateCommand())
@@ -77,6 +79,7 @@ namespace DD.OnlineNote.DataLayer.SQL
                             Guid _userGuid = reader.GetGuid(reader.GetOrdinal("id"));
                             yield return new Note
                             {
+                                Id = _userGuid,
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
                                 Content = reader.GetString(reader.GetOrdinal("Content")),
                                 Owner = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Get(reader.GetGuid(reader.GetOrdinal("Owner"))),
@@ -103,7 +106,7 @@ namespace DD.OnlineNote.DataLayer.SQL
                     command.Parameters.AddWithValue("@Title", note.Title);
                     command.Parameters.AddWithValue("@Content", note.Content);
                     command.Parameters.AddWithValue("@DateChanged", note.DateChanged);
-                    command.Parameters.AddWithValue("@CategoryName", note.Categories.Single().Id);
+                    command.Parameters.AddWithValue("@CategoryName", note.Categories?.Single()?.Id);
                     command.ExecuteNonQuery();
                 }
             }

@@ -20,10 +20,10 @@ namespace DD.OnlineNote.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("api/users/{id}")]
+        [Route("api/Users/{id}")]
         public User Get(Guid id)
         {
-            Logger.Log.Instance.Debug("Запрос пользователя с id: {0}", id);
+            Logger.Log.Instance.Info("Запрос пользователя с id: {0}", id);
             return _usersRepository.Get(id);
         }
 
@@ -33,10 +33,10 @@ namespace DD.OnlineNote.WebApi.Controllers
         /// <param name="user">Пользователь</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/users")]
+        [Route("api/users/")]
         public User Post([FromBody] User user)
         {
-            Logger.Log.Instance.Debug("Создание пользователя с именем: {0}", user.Name);
+            Logger.Log.Instance.Info("Создание пользователя с именем: {0}", user.Name);
             return _usersRepository.Create(user);
         }
 
@@ -44,7 +44,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/users/{id}")]
         public void Delete(Guid id)
         {
-            Logger.Log.Instance.Debug("Удаление пользователя с id: {0}", id);
+            Logger.Log.Instance.Info("Удаление пользователя с id: {0}", id);
             _usersRepository.Delete(id);
         }
 
@@ -52,6 +52,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/users/{id}/categories")]
         public IEnumerable<Category> GetUserCategories(Guid id)
         {
+            Logger.Log.Instance.Info("Получение пользователя с id: {0}", id);
             return _usersRepository.Get(id).Categories;
         }
     }

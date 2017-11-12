@@ -53,7 +53,7 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
             User createdUser = userRepos.Create(_user);
             var categorForTest = categoriesRepos.Create(createdUser.Id, _user.Name + " categories");
 
-            _userIdForDelete.Add(createdUser.Id);
+            //_userIdForDelete.Add(createdUser.Id);
            
            
             var DBCategoriesrId = categoriesRepos.Get(categorForTest.Id);
