@@ -18,7 +18,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         {
             _usersRepository = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString));
         }
-
+        [WebExceptionFilters]
         [HttpGet]
         [Route("api/Users/{id}")]
         public User Get(Guid id)
@@ -32,6 +32,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         /// </summary>
         /// <param name="user">Пользователь</param>
         /// <returns></returns>
+        [WebExceptionFilters]
         [HttpPost]
         [Route("api/users/")]
         public User Post([FromBody] User user)
@@ -39,7 +40,7 @@ namespace DD.OnlineNote.WebApi.Controllers
             Logger.Log.Instance.Trace("Создание пользователя с именем: {0}", user.Name);
             return _usersRepository.Create(user);
         }
-
+        [WebExceptionFilters]
         [HttpDelete]
         [Route("api/users/{id}")]
         public void Delete(Guid id)
@@ -47,7 +48,7 @@ namespace DD.OnlineNote.WebApi.Controllers
             Logger.Log.Instance.Trace("Удаление пользователя с id: {0}", id);
             _usersRepository.Delete(id);
         }
-
+        [WebExceptionFilters]
         [HttpGet]
         [Route("api/users/{id}/categories")]
         public IEnumerable<Category> GetUserCategories(Guid id)

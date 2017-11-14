@@ -23,7 +23,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [WebExceptionFilters]
         [HttpPost]
         [Route("api/note/Create")]
-        public Note Create(Note note)
+        public Note Create([FromBody]Note note)
         {
             Logger.Log.Instance.Trace("Создание заметки с названием: {0}, владелец: {1}", note.Title , note.Owner);
             return _noteRepository.Create(note);
@@ -50,14 +50,14 @@ namespace DD.OnlineNote.WebApi.Controllers
         [WebExceptionFilters]
         [HttpPost]
         [Route("api/note")]
-        public Note UpdateNote(Note note)
+        public Note UpdateNote([FromBody]Note note)
         {
             Logger.Log.Instance.Trace("Обновление заметки с id", note.Id);
             return _noteRepository.UpdateNote(note);         
         }
         [WebExceptionFilters]
         [HttpGet]
-        [Route("api/note/GetSharedUsers/{Id}")]
+        [Route("api/note/GetSharedUsers/")]
         public IEnumerable<User> GetSharedUsers([FromBody]Guid noteId)
         {
             Logger.Log.Instance.Trace("Запрос пользователей с доступом к заметке с id: {0}", noteId);
