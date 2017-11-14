@@ -21,7 +21,6 @@ namespace DD.OnlineNote.WPF
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        
         public static ServiceProvider GetProvider(string ConnectionString)
         {
             if(instance == null)

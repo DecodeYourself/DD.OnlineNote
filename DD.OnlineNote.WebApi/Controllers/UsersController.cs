@@ -12,7 +12,7 @@ namespace DD.OnlineNote.WebApi.Controllers
 {
     public class UsersController : ApiController
     {
-        private const string _connectionString = @"Data Source=localhost\SQLFORCODING;Initial Catalog=OnlineNote;Integrated Security=true";
+        private const string _connectionString = @"Server=tcp:srv-onlinenote.database.windows.net,1433;Initial Catalog=onlinenoteDB;Persist Security Info=False;User ID=WebAccess;Password=ApiReader2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private readonly IUserRepository _usersRepository;
         public UsersController()
         {
@@ -23,7 +23,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/Users/{id}")]
         public User Get(Guid id)
         {
-            Logger.Log.Instance.Info("Запрос пользователя с id: {0}", id);
+            Logger.Log.Instance.Trace("Запрос пользователя с id: {0}", id);
             return _usersRepository.Get(id);
         }
 
@@ -36,7 +36,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/users/")]
         public User Post([FromBody] User user)
         {
-            Logger.Log.Instance.Info("Создание пользователя с именем: {0}", user.Name);
+            Logger.Log.Instance.Trace("Создание пользователя с именем: {0}", user.Name);
             return _usersRepository.Create(user);
         }
 
@@ -44,7 +44,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/users/{id}")]
         public void Delete(Guid id)
         {
-            Logger.Log.Instance.Info("Удаление пользователя с id: {0}", id);
+            Logger.Log.Instance.Trace("Удаление пользователя с id: {0}", id);
             _usersRepository.Delete(id);
         }
 
@@ -52,7 +52,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/users/{id}/categories")]
         public IEnumerable<Category> GetUserCategories(Guid id)
         {
-            Logger.Log.Instance.Info("Получение категорий пользователя с id: {0}", id);
+            Logger.Log.Instance.Trace("Получение категорий пользователя с id: {0}", id);
             return _usersRepository.Get(id).Categories;
         }
     }

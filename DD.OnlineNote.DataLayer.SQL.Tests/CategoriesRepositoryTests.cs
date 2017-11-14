@@ -14,7 +14,7 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
     [TestClass]
     public class CategoriesRepositoryTests
     {
-        private const string _connectionString = @"Data Source=localhost\SQLFORCODING;Initial Catalog=OnlineNote;Integrated Security=true";
+        private const string _connectionString = @"Server=tcp:srv-onlinenote.database.windows.net,1433;Initial Catalog=onlinenoteDB;Persist Security Info=False;User ID=WebAccess;Password=ApiReader2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private readonly List<Guid> _userIdForDelete = new List<Guid>();
 
         #region Additional test attributes

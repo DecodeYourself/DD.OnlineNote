@@ -34,3 +34,8 @@
 2017-11-12 16:11:46.8741|INFO|DD.OnlineNote.Logger.Log|Удаление категории с id: acaeef9d-0f1c-4d9d-8190-d93357fdef58
 2017-11-12 16:12:14.8221|INFO|DD.OnlineNote.Logger.Log|Получение категории с id
 2017-11-12 16:12:51.9978|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с id: 6eee3fc7-3a7e-4aad-9157-41221298cc91
+2017-11-13 09:24:29.6786|INFO|DD.OnlineNote.Logger.Log|Запрос пользователей с доступом к заметке с id: 00000000-0000-0000-0000-000000000000
+2017-11-13 09:33:14.6356|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с id: 6eee3fc7-3a7e-4aad-9157-41221298cc91
+2017-11-13 10:27:43.0386|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с id: 6eee3fc7-3a7e-4aad-9157-41221298cc91
+2017-11-13 12:26:09.1626|INFO|DD.OnlineNote.Logger.Log|Запрос пользователя с id: 6eee3fc7-3a7e-4aad-9157-41221298cc91
+2017-11-13 12:26:29.6266|INFO|DD.OnlineNote.Logger.Log|Запрос заметок пользователя с id: 6eee3fc7-3a7e-4aad-9157-41221298cc91

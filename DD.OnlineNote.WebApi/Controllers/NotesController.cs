@@ -12,7 +12,7 @@ namespace DD.OnlineNote.WebApi.Controllers
 {
     public class NotesController : ApiController
     {
-        private const string _connectionString = @"Data Source=localhost\SQLFORCODING;Initial Catalog=OnlineNote;Integrated Security=true";
+        private const string _connectionString = @"Server=tcp:srv-onlinenote.database.windows.net,1433;Initial Catalog=onlinenoteDB;Persist Security Info=False;User ID=WebAccess;Password=ApiReader2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private readonly INoteRepository _noteRepository;
 
         public NotesController()
@@ -25,7 +25,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/note/Create")]
         public Note Create(Note note)
         {
-            Logger.Log.Instance.Info("Создание заметки с названием: {0}, владелец: {1}", note.Title , note.Owner);
+            Logger.Log.Instance.Trace("Создание заметки с названием: {0}, владелец: {1}", note.Title , note.Owner);
             return _noteRepository.Create(note);
         }
 
@@ -35,7 +35,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         public bool Delete(Guid noteId)
         {
             
-            Logger.Log.Instance.Info("Удаление заметки с id: {0}", noteId);
+            Logger.Log.Instance.Trace("Удаление заметки с id: {0}", noteId);
             return _noteRepository.Delete(noteId);
         }
 
@@ -44,7 +44,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/note/getusernotes/{userId}")]
         public IEnumerable<Note> GetUserNotes(Guid userId)
         {
-            Logger.Log.Instance.Info("Запрос заметок пользователя с id: {0}", userId);
+            Logger.Log.Instance.Trace("Запрос заметок пользователя с id: {0}", userId);
             return _noteRepository.GetUserNotes(userId);
         }
         [WebExceptionFilters]
@@ -52,7 +52,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/note")]
         public Note UpdateNote(Note note)
         {
-            Logger.Log.Instance.Info("Обновление заметки с id", note.Id);
+            Logger.Log.Instance.Trace("Обновление заметки с id", note.Id);
             return _noteRepository.UpdateNote(note);         
         }
         [WebExceptionFilters]
@@ -60,7 +60,7 @@ namespace DD.OnlineNote.WebApi.Controllers
         [Route("api/note/GetSharedUsers/{Id}")]
         public IEnumerable<User> GetSharedUsers([FromBody]Guid noteId)
         {
-            Logger.Log.Instance.Info("Запрос пользователей с доступом к заметке с id: {0}", noteId);
+            Logger.Log.Instance.Trace("Запрос пользователей с доступом к заметке с id: {0}", noteId);
             return _noteRepository.GetSharedUsers(noteId);
         }
     }
