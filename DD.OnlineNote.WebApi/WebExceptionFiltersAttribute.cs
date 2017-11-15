@@ -14,12 +14,12 @@ namespace DD.OnlineNote.WebApi
         {
             if (context.Exception is NotImplementedException)
             {
-                //Logger.Log.Instance.Trace("Ошибка: {0}", context.Exception.Message);
+                Logger.Log.Instance.Trace("Ошибка: {0}", context.Exception.Message);
                 context.Response = new HttpResponseMessage(HttpStatusCode.NotImplemented);
             }
             if (context.Exception is Exception)
             {
-                //Logger.Log.Instance.Trace("Какая то дичь: {0}", context.Exception.Message);
+                Logger.Log.Instance.Trace("Ошибка: {0}", context.Exception.Message);
                 context.Response = new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
         }

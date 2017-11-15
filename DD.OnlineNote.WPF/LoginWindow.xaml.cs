@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DD.OnlineNote.Model;
+using System.Windows.Controls.Primitives;
 
 namespace DD.OnlineNote.WPF
 {
@@ -25,13 +26,27 @@ namespace DD.OnlineNote.WPF
         public LoginWindow()
         {
             InitializeComponent();
+#if DEBUG
+            provider = ServiceProvider.GetProvider("http://localhost:62140/");
+#else
+            provider = ServiceProvider.GetProvider("http://onlinenote.azurewebsites.net/");
+#endif
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private async  void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(txtLogin.Text))
             {
-                MessageBox.Show("Заполните имя пользователя");
+                popupFillLogin.IsOpen = true;
+                return;
+            }
+            if( await provider.CheckLogin(txtLogin.Text))
+            {
+                popupWelcom.IsOpen = true;
+            }
+            else
+            {
+                popupNotFoundUser.IsOpen = true;
                 return;
             }
 

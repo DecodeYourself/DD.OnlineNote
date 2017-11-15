@@ -82,5 +82,23 @@ namespace DD.OnlineNote.DataLayer.SQL
                 }
             }
         }
+
+        public bool CheckUserByName(string Name)
+        {
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+                using (var command = sqlConnection.CreateCommand())
+                {
+                    command.CommandText = "select id, Nickname from users where Nickname = @Name";
+                    command.Parameters.AddWithValue("@Name", Name);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        return reader.HasRows;
+                    }
+                }
+            }
+        }
     }
 }

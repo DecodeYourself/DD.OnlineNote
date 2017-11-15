@@ -12,7 +12,11 @@ namespace DD.OnlineNote.WebApi.Controllers
 {
     public class UsersController : ApiController
     {
+#if DEBUG
+        private const string _connectionString = @"Data Source=localhost\SQLFORCODING;Initial Catalog=OnlineNote;Integrated Security=true";
+#else
         private const string _connectionString = @"Server=tcp:srv-onlinenote.database.windows.net,1433;Initial Catalog=onlinenoteDB;Persist Security Info=False;User ID=WebAccess;Password=ApiReader2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+#endif
         private readonly IUserRepository _usersRepository;
         public UsersController()
         {
@@ -55,6 +59,14 @@ namespace DD.OnlineNote.WebApi.Controllers
         {
             Logger.Log.Instance.Trace("Получение категорий пользователя с id: {0}", id);
             return _usersRepository.Get(id).Categories;
+        }
+        [WebExceptionFilters]
+        [HttpPost]
+        [Route("api/users/check")]
+        public bool CheckUserByName([FromBody]string name)
+        {
+            Logger.Log.Instance.Trace("Поиск пользователя с именем: {0}", name);
+            return _usersRepository.CheckUserByName(name);
         }
     }
 }

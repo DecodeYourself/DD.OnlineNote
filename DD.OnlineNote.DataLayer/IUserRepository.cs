@@ -12,5 +12,6 @@ namespace DD.OnlineNote.DataLayer
         User Create(User user);
         void Delete(Guid id);
         User Get(Guid id);
+        bool CheckUserByName(string Name);
     }
 }

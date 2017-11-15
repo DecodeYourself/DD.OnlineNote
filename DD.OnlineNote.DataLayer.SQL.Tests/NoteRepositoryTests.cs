@@ -13,10 +13,14 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
     [TestClass]
     public class NoteRepositoryTests 
     {
+#if DEBUG
+        private const string _connectionString = @"Data Source=localhost\SQLFORCODING;Initial Catalog=OnlineNote;Integrated Security=true";
+#else
         private const string _connectionString = @"Server=tcp:srv-onlinenote.database.windows.net,1433;Initial Catalog=onlinenoteDB;Persist Security Info=False;User ID=WebAccess;Password=ApiReader2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+#endif
         private static List<Note> _noteIdTodelete = new List<Note>();
 
-        #region Additional test attributes
+#region Additional test attributes
         //
         // You can use the following additional attributes as you write your tests:
         //
@@ -36,7 +40,7 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
         // [TestCleanup()]
         // public void MyTestCleanup() { }
         //
-        #endregion
+#endregion
 
       
         [TestMethod]
@@ -102,11 +106,11 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
 
             Assert.AreEqual(noteToSQL.Content, noteAfterUpdate.Content);
         }
-        //[TestCleanup]
+        [TestCleanup]
         public void CleanData()
         {
-            //foreach (var id in _noteIdTodelete)
-            //    new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Delete(id);
+            foreach (var note in _noteIdTodelete)
+                new NoteRepository(_connectionString).Delete(note.Id);
 
         }
 

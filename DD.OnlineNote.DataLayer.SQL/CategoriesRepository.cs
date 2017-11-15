@@ -52,32 +52,33 @@ namespace DD.OnlineNote.DataLayer.SQL
             }
         }
 
-        public Category Get(Guid categoriesId)
-        {
-            using (var sqlConnection = new SqlConnection(_connectionString))
-            {
-                sqlConnection.Open();
-                using (var command = sqlConnection.CreateCommand())
-                {
-                    command.CommandText = "select * from Category where id = @id";
-                    command.Parameters.AddWithValue("@id", categoriesId);
-                    using (var reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            return new Category
-                            {
-                                Name = reader.GetString(reader.GetOrdinal("name")),
-                                Id = reader.GetGuid(reader.GetOrdinal("id"))
-                            };
-                        }
-                        else
-                            return null;
+        //[Obsolete]
+        //public Category Get(Guid categoriesId)
+        //{
+        //    using (var sqlConnection = new SqlConnection(_connectionString))
+        //    {
+        //        sqlConnection.Open();
+        //        using (var command = sqlConnection.CreateCommand())
+        //        {
+        //            command.CommandText = "select * from Category where id = @id";
+        //            command.Parameters.AddWithValue("@id", categoriesId);
+        //            using (var reader = command.ExecuteReader())
+        //            {
+        //                if (reader.Read())
+        //                {
+        //                    return new Category
+        //                    {
+        //                        Name = reader.GetString(reader.GetOrdinal("name")),
+        //                        Id = reader.GetGuid(reader.GetOrdinal("id"))
+        //                    };
+        //                }
+        //                else
+        //                    return null;
 
-                    }
-                }
-            }
-        }
+        //            }
+        //        }
+        //    }
+        //}
 
         public IEnumerable<Category> GetUserCategories(Guid userId)
         {

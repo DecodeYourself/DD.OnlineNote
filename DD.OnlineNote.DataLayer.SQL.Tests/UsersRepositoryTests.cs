@@ -12,7 +12,11 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
     [TestClass]
     public class UsersRepositoryTests
     {
-        private const string ConnectionString = @"Server=tcp:srv-onlinenote.database.windows.net,1433;Initial Catalog=onlinenoteDB;Persist Security Info=False;User ID=WebAccess;Password=ApiReader2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+#if DEBUG
+        private const string _connectionString = @"Data Source=localhost\SQLFORCODING;Initial Catalog=OnlineNote;Integrated Security=true";
+#else
+        private const string _connectionString = @"Server=tcp:srv-onlinenote.database.windows.net,1433;Initial Catalog=onlinenoteDB;Persist Security Info=False;User ID=WebAccess;Password=ApiReader2017;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+#endif
         private readonly List<Guid> _tempUsers = new List<Guid>();
 
         [TestMethod]
@@ -25,7 +29,7 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
             };
 
             //act
-            var repository = new UsersRepository(ConnectionString, new CategoriesRepository(ConnectionString));
+            var repository = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString));
             var result = repository.Create(user);
 
             _tempUsers.Add(user.Id);
@@ -49,8 +53,8 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
             const string category = "testCategory";
 
             //act
-            var categoriesRepository = new CategoriesRepository(ConnectionString);
-            var usersRepository = new UsersRepository(ConnectionString, categoriesRepository);
+            var categoriesRepository = new CategoriesRepository(_connectionString);
+            var usersRepository = new UsersRepository(_connectionString, categoriesRepository);
             user = usersRepository.Create(user);
 
             _tempUsers.Add(user.Id);
@@ -67,7 +71,7 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
         public void CleanData()
         {
             foreach (var id in _tempUsers)
-                new UsersRepository(ConnectionString, new CategoriesRepository(ConnectionString)).Delete(id);
+                new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Delete(id);
 
         }
     }

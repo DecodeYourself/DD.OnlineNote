@@ -6,7 +6,56 @@
         xmlns:local="clr-namespace:DD.OnlineNote.WPF"
         mc:Ignorable="d"
         Title="LoginWindow" Height="395.434" Width="391.525">
+    <!--
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="1" To="0.8" RepeatBehavior="Forever" AutoReverse="True" Duration="00:00:00.3" Storyboard.TargetProperty="RenderTransform.ScaleX" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation To="1" Duration="00:00:00.4" Storyboard.TargetProperty="RenderTransform.ScaleX" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform CenterX="120" CenterY="30" ScaleX="1" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+-->
     <Grid>
+        <Popup x:Name="popupNotFoundUser" StaysOpen="False" Placement="MousePoint" MaxWidth="300"
+         AllowsTransparency="True"  >
+            <TextBlock TextWrapping="Wrap" Width="150" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
+            Пользователь не найден!
+            </TextBlock>
+        </Popup>
+        <Popup x:Name="popupFillLogin" StaysOpen="False" Placement="MousePoint" MaxWidth="300"
+         AllowsTransparency="True"  >
+            <TextBlock TextWrapping="Wrap" Width="121" Height="69" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
+            Необходимо заполнить имя пользователя!
+            </TextBlock>
+        </Popup>
+        <Popup x:Name="popupWelcom" StaysOpen="False" Placement="MousePoint" MaxWidth="300"
+         AllowsTransparency="True"  >
+            <TextBlock TextWrapping="Wrap" Width="121" Height="69" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
+            Пользователь найден!
+            </TextBlock>
+        </Popup>
+        
         <Canvas HorizontalAlignment="Left" Height="344" VerticalAlignment="Top" Width="364" Margin="10,10,0,0" Grid.ColumnSpan="3">
             <Button x:Name="btnLogin" Content="Войти" Width="100" Canvas.Left="127" Canvas.Top="178" Height="29" Click="btnLogin_Click" />
             <Button x:Name="btnRegistration" Content="Регистрация" Width="80" Canvas.Left="136" Canvas.Top="314" Click="btnRegistration_Click" />

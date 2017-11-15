@@ -31,7 +31,7 @@ namespace DD.OnlineNote.DataLayer.SQL
                 {
                     note.Id = Guid.NewGuid();
 
-                    command.CommandText = "insert into Note ([id],[Title],[Content],[Owner],[DateCreated],[DateChanged],[CategoryName]) values(@id,@Title,@Content,@Owner,@DateCreated,@DateChanged,@CategoryName)";
+                    command.CommandText = "insert into Note (id,Title,Content,Owner,DateCreated,DateChanged,CategoryName) values(@id,@Title,@Content,@Owner,@DateCreated,@DateChanged,@CategoryName)";
 
                     command.Parameters.AddWithValue("@id", note.Id);
                     command.Parameters.AddWithValue("@Title", note.Title);
@@ -69,7 +69,7 @@ namespace DD.OnlineNote.DataLayer.SQL
                 sqlConnection.Open();
                 using (var command = sqlConnection.CreateCommand())
                 {
-                    command.CommandText = "select id,Title,[Content],Owner,DateCreated,DateChanged,CategoryName from Note where Owner = @userId";
+                    command.CommandText = "select id,Title,Content,Owner,DateCreated,DateChanged,CategoryName from Note where Owner = @userId";
                     command.Parameters.AddWithValue("@userId", userId);
 
                     using (var reader = command.ExecuteReader())
@@ -146,7 +146,7 @@ namespace DD.OnlineNote.DataLayer.SQL
                 sqlConnection.Open();
                 using (var command = sqlConnection.CreateCommand())
                 {
-                    command.CommandText = "select id,Title,[Content],Owner,DateCreated,DateChanged,CategoryName from Note where id = @noteid";
+                    command.CommandText = "select id,Title,Content,Owner,DateCreated,DateChanged,CategoryName from Note where id = @noteid";
                     command.Parameters.AddWithValue("@noteid", NoteId);
 
                     using (var reader = command.ExecuteReader())
@@ -156,8 +156,9 @@ namespace DD.OnlineNote.DataLayer.SQL
                             Guid _userGuid = reader.GetGuid(reader.GetOrdinal("id"));
                             return new Note
                             {
+                                Id = _userGuid,
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
-                                Content = reader.GetString(reader.GetOrdinal("[Content]")),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
                                 Owner = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Get(reader.GetGuid(reader.GetOrdinal("Owner"))),
                                 DateCreated = reader.GetDateTime(reader.GetOrdinal("DateCreated")),
                                 DateChanged = reader.GetDateTime(reader.GetOrdinal("DateChanged")),
