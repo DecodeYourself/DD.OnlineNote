@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DD.OnlineNote.Model;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media.Effects;
 
 namespace DD.OnlineNote.WPF
 {
@@ -22,10 +23,11 @@ namespace DD.OnlineNote.WPF
     public partial class LoginWindow : Window
     {
         private ServiceProvider provider;
-
+        Brush currentBrush;
         public LoginWindow()
         {
             InitializeComponent();
+            currentBrush = this.Background;
 #if DEBUG
             provider = ServiceProvider.GetProvider("http://localhost:62140/");
 #else
@@ -35,30 +37,40 @@ namespace DD.OnlineNote.WPF
 
         private async  void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtLogin.Text))
+            if (string.IsNullOrEmpty(loginBox.Text))
             {
                 popupFillLogin.IsOpen = true;
-                return;
             }
-            if( await provider.CheckLogin(txtLogin.Text))
+            else if( await provider.CheckLogin(loginBox.Text))
             {
-                popupWelcom.IsOpen = true;
+                Main main = new Main();
+                main.Title = $"OnlineNote, user: {loginBox.Text}";
+                main.Show();
+                //popupWelcom.IsOpen = true;
+                this.Close();
             }
             else
             {
                 popupNotFoundUser.IsOpen = true;
-                return;
             }
 
         }
 
         private void btnRegistration_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtLogin.Text))
-            {
-                MessageBox.Show("Заполните имя пользователя");
-                return;
-            }
+            BlurEffect blur = new BlurEffect();
+            blur.Radius = 5;
+            //this.Background = new SolidColorBrush(Colors.DarkGray);
+            this.Effect = blur;
+            RegistrationWindow RegWin = new RegistrationWindow();
+            RegWin.Owner = this;
+            RegWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            RegWin.ShowDialog();
+            this.Effect = null;
+            this.Background = currentBrush;
+
+           
+                        
         }
     }
 }

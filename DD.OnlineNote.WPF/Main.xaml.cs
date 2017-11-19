@@ -22,6 +22,9 @@ namespace DD.OnlineNote.WPF
         public Main()
         {
             InitializeComponent();
+            
         }
     }
+    
+
 }

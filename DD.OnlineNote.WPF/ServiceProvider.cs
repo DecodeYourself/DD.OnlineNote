@@ -49,9 +49,18 @@ namespace DD.OnlineNote.WPF
             throw new NotImplementedException();
         }
 
-        public User CreateUser(User user)
+        public async Task<User> CreateUser(User user)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage Response = await Client.PostAsJsonAsync("api/users/", user);
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                return await Response.Content.ReadAsAsync<User>();
+            }
+            else
+            {
+                //ошибка с соединением
+                return null;
+            }
         }
 
         public Category CreateCategory(Guid userId, string name)
@@ -74,9 +83,18 @@ namespace DD.OnlineNote.WPF
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Note> GetUserNotes(Guid userId)
+        public async Task<IEnumerable<Note>> GetUserNotes(Guid userId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage Response = await Client.GetAsync("api/users/check/userId");
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                return await Response.Content.ReadAsAsync<IEnumerable<Note>>();
+            }
+            else
+            {
+                //ошибка с соединением
+                return null;
+            }
         }
 
         public Note UpdateNote(Note note)
