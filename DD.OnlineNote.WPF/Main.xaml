@@ -5,11 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DD.OnlineNote.WPF"
         mc:Ignorable="d"
-        Title="Main" Height="400" Width="600">
-    
-    
-    <Grid>
-       
-    </Grid>
+        Title="Main" Height="681" Width="1000">
 
+
+    <Grid>
+        <DockPanel HorizontalAlignment="Left" Height="650" LastChildFill="True" Margin="0,0,0,0" VerticalAlignment="Top" Width="982">
+            <ScrollViewer x:Name="NoteScrollView" DockPanel.Dock="Left" HorizontalAlignment="Left" Height="590" VerticalAlignment="Top" Width="200">
+                <StackPanel x:Name="NoteStackPanel" HorizontalAlignment="Stretch" Height="650" VerticalAlignment="Top">
+                    <TextBlock>
+                    First row
+                    </TextBlock>
+                    <TextBlock>
+                    Second row
+                    </TextBlock>
+                </StackPanel>
+            </ScrollViewer>
+            <StackPanel Margin="10,0,0,0" DockPanel.Dock="Top" Orientation="Vertical" Width="300" HorizontalAlignment="Left">
+                <WrapPanel>
+                    <Label>Заголовок</Label>
+                    <TextBlock x:Name="TitleBlock" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        Hello from Title
+                    </TextBlock>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label>Категория</Label>
+                    <TextBlock x:Name="CategoryBlock" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        Hello from Category
+                    </TextBlock>
+                </WrapPanel>
+            </StackPanel>
+            <StackPanel Height="50" VerticalAlignment="Center" Width="150" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+                <Button x:Name="LogoffBtn" Content="Выйти"/>
+                <Button x:Name="SaveBtn" Content="Сохранить"/>
+            </StackPanel>
+            <!--<StackPanel Height="25" VerticalAlignment="Center" Width="150" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+                <Button x:Name="SaveBtn" Content="Сохранить"/>
+            </StackPanel>-->
+            <StackPanel Margin="10">
+                <TextBlock>Center</TextBlock>
+            </StackPanel>
+        </DockPanel>
+    </Grid>
 </Window>

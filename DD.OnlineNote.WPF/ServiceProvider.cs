@@ -15,6 +15,7 @@ namespace DD.OnlineNote.WPF
         private static ServiceProvider instance;
         public readonly HttpClient Client;
 
+
         private ServiceProvider(string ConnectionString)
         {
             Client = new HttpClient();
@@ -26,6 +27,13 @@ namespace DD.OnlineNote.WPF
         {
             if(instance == null)
                 instance = new ServiceProvider(ConnectionString);
+
+            return instance;
+        }
+        public static ServiceProvider GetProvider()
+        {
+            if (instance == null)
+                throw new Exception("не было первой инциализации, это очень тупой синглтон");
 
             return instance;
         }
