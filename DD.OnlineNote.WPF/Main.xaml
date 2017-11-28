@@ -9,7 +9,14 @@
 
 
     <Grid>
-        <DockPanel HorizontalAlignment="Left" Height="650" LastChildFill="True" Margin="0,0,0,0" VerticalAlignment="Top" Width="982">
+        <DockPanel HorizontalAlignment="Left" Height="650" LastChildFill="True"  VerticalAlignment="Top" Width="982">
+            <Grid Height="50" DockPanel.Dock="Bottom" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+            </Grid>
             <ScrollViewer x:Name="NoteScrollView" DockPanel.Dock="Left" HorizontalAlignment="Left" Height="590" VerticalAlignment="Top" Width="200">
                 <StackPanel x:Name="NoteStackPanel" HorizontalAlignment="Stretch" Height="650" VerticalAlignment="Top">
                     <TextBlock>
@@ -34,14 +41,15 @@
                     </TextBlock>
                 </WrapPanel>
             </StackPanel>
-            <StackPanel Height="50" VerticalAlignment="Center" Width="150" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+            
+            <!--<StackPanel Height="50" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right">
                 <Button x:Name="LogoffBtn" Content="Выйти"/>
                 <Button x:Name="SaveBtn" Content="Сохранить"/>
-            </StackPanel>
+            </StackPanel>-->
             <!--<StackPanel Height="25" VerticalAlignment="Center" Width="150" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
                 <Button x:Name="SaveBtn" Content="Сохранить"/>
             </StackPanel>-->
-            <StackPanel Margin="10">
+            <StackPanel Margin="10,10,0,0">
                 <TextBlock>Center</TextBlock>
             </StackPanel>
         </DockPanel>

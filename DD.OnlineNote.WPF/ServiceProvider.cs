@@ -30,13 +30,6 @@ namespace DD.OnlineNote.WPF
 
             return instance;
         }
-        public static ServiceProvider GetProvider()
-        {
-            if (instance == null)
-                throw new Exception("не было первой инциализации, это очень тупой синглтон");
-
-            return instance;
-        }
 
         public async Task<bool> CheckLogin(string loginName)
         {
