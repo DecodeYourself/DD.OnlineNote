@@ -13,7 +13,9 @@ namespace DD.OnlineNote.WPF
     public class ServiceProvider
     {
 #if !DEBUG
-        const string connectionString = "http://localhost:62140/";
+        //const string connectionString = "http://localhost:62140/";
+        const string connectionString = "http://onlinenote.azurewebsites.net/";
+
 #else
         const string connectionString = "http://onlinenote.azurewebsites.net/";
 #endif
