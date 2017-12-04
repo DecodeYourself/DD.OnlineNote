@@ -10,7 +10,7 @@ namespace DD.OnlineNote.DataLayer.SQL
         public readonly string _connectionString;
         public readonly ICategoriesRepository _categoriesRepository;
 
-        public UsersRepository(string connectionString,ICategoriesRepository categoriesRepository)
+        public UsersRepository(string connectionString, ICategoriesRepository categoriesRepository)
         {
             if (connectionString == null)
                 throw new ArgumentException(nameof(connectionString));
@@ -28,12 +28,15 @@ namespace DD.OnlineNote.DataLayer.SQL
                 using (var command = sqlConnection.CreateCommand())
                 {
                     user.Id = Guid.NewGuid();
-                    command.CommandText = "insert into Users (id, Nickname) values (@id, @name)";
+                    command.CommandText = "insert into Users (id, Nickname,Password) values (@id, @name, @Password)";
                     command.Parameters.AddWithValue("@id", user.Id);
                     command.Parameters.AddWithValue("@name", user.Name);
+                    command.Parameters.AddWithValue("@Password", user.Password);
                     command.ExecuteNonQuery();
-                    return user;
                 }
+                _categoriesRepository.Create(user.Id, "Default");
+                return user;
+
             }
         }
 
@@ -44,9 +47,6 @@ namespace DD.OnlineNote.DataLayer.SQL
                 sqlConnection.Open();
                 using (var command = sqlConnection.CreateCommand())
                 {
-                    //SqlTransaction transaction;
-                    //transaction = sqlConnection.BeginTransaction("Delete");
-
                     command.CommandText = "delete from Users where id = @id";
                     command.Parameters.AddWithValue("@id", id);
                     command.ExecuteNonQuery();
@@ -61,7 +61,7 @@ namespace DD.OnlineNote.DataLayer.SQL
                 sqlConnection.Open();
                 using (var command = sqlConnection.CreateCommand())
                 {
-                    command.CommandText = "select id, Nickname from users where id = @id";
+                    command.CommandText = "select id, Nickname,Password from users where id = @id";
                     command.Parameters.AddWithValue("@id", id);
 
                     using (var reader = command.ExecuteReader())
@@ -70,11 +70,12 @@ namespace DD.OnlineNote.DataLayer.SQL
                         //    throw new ArgumentException($"Пользователь с id {id} не найден");
                         if (!reader.Read())
                             return null;
-                        
+
                         var user = new User
                         {
                             Id = reader.GetGuid(reader.GetOrdinal("id")),
-                            Name = reader.GetString(reader.GetOrdinal("Nickname"))
+                            Name = reader.GetString(reader.GetOrdinal("Nickname")),
+                            Password = reader.GetString(reader.GetOrdinal("Password"))
                         };
                         user.Categories = _categoriesRepository.GetUserCategories(user.Id);
                         return user;
@@ -96,6 +97,34 @@ namespace DD.OnlineNote.DataLayer.SQL
                     using (var reader = command.ExecuteReader())
                     {
                         return reader.HasRows;
+                    }
+                }
+            }
+        }
+
+        public User LoginUser(User LoginUser)
+        {
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+                using (var command = sqlConnection.CreateCommand())
+                {
+                    command.CommandText = "select id, Nickname, Password from users where Nickname = @Name";
+                    command.Parameters.AddWithValue("@Name", LoginUser.Name);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                            return null;
+
+                        var user = new User
+                        {
+                            Id = reader.GetGuid(reader.GetOrdinal("id")),
+                            Name = reader.GetString(reader.GetOrdinal("Nickname")),
+                            Password = reader.GetString(reader.GetOrdinal("Password"))
+                        };
+
+                        return LoginUser.Password == user.Password ? user : null;
                     }
                 }
             }

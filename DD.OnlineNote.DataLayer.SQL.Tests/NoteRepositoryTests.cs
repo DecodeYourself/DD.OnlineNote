@@ -46,8 +46,8 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
         [TestMethod]
         public void Create()
         {
-            User _user = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Create(new User { Name = "AzureTestUser" });
-            Category _category = new CategoriesRepository(_connectionString).Create(_user.Id, $"Category {_user.Name}");
+            User _user = new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Get(Guid.Parse("6EEE3FC7-3A7E-4AAD-9157-41221298CC91"));  //new UsersRepository(_connectionString, new CategoriesRepository(_connectionString)).Create(new User { Name = "AzureTestUser" });
+            //Category _category = new CategoriesRepository(_connectionString).Create(_user.Id, $"Category {_user.Name}");
             
            
             Note testNote = new Note
@@ -106,7 +106,7 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
 
             Assert.AreEqual(noteToSQL.Content, noteAfterUpdate.Content);
         }
-        [TestCleanup]
+        //[TestCleanup]
         public void CleanData()
         {
             foreach (var note in _noteIdTodelete)

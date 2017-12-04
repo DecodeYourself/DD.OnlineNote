@@ -51,8 +51,8 @@ namespace DD.OnlineNote.DataLayer.SQL.Tests
                 Name = "BigTestUser",
             };
 
-            var categoriesRepos = new CategoriesRepository(_connectionString);
-            var userRepos = new UsersRepository(_connectionString, categoriesRepos);
+            CategoriesRepository categoriesRepos = new CategoriesRepository(_connectionString);
+            UsersRepository userRepos = new UsersRepository(_connectionString, categoriesRepos);
 
             User createdUser = userRepos.Create(_user);
             var categorForTest = categoriesRepos.Create(createdUser.Id, _user.Name + " categories");

@@ -63,10 +63,18 @@ namespace DD.OnlineNote.WebApi.Controllers
         [WebExceptionFilters]
         [HttpPost]
         [Route("api/users/check")]
-        public bool CheckUserByName([FromBody]string name)
+        public bool CheckUserByName([FromBody]string Name)
         {
-            Logger.Log.Instance.Trace("Поиск пользователя с именем: {0}", name);
-            return _usersRepository.CheckUserByName(name);
+            Logger.Log.Instance.Trace("Поиск пользователя с именем: {0}", Name);
+            return _usersRepository.CheckUserByName(Name);
+        }
+        [WebExceptionFilters]
+        [HttpPost]
+        [Route("api/users/login")]
+        public User Login([FromBody]User loginUser)
+        {
+            Logger.Log.Instance.Trace("Вход пользователя с id: {0}", loginUser.Id);
+            return _usersRepository.LoginUser(loginUser);
         }
     }
 }

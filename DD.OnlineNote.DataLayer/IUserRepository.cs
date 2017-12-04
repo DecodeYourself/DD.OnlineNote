@@ -13,5 +13,6 @@ namespace DD.OnlineNote.DataLayer
         void Delete(Guid id);
         User Get(Guid id);
         bool CheckUserByName(string Name);
+        User LoginUser(User LoginUser);
     }
 }

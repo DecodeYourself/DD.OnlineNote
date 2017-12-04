@@ -1,56 +1,114 @@
 ﻿<Window x:Class="DD.OnlineNote.WPF.Main"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DD.OnlineNote.WPF"
         mc:Ignorable="d"
-        Title="Main" Height="681" Width="1000">
+        Title="Main" Height="700" Width="1100" ResizeMode="NoResize">
 
 
-    <Grid>
-        <DockPanel HorizontalAlignment="Left" Height="650" LastChildFill="True"  VerticalAlignment="Top" Width="982">
-            <Grid Height="50" DockPanel.Dock="Bottom" Margin="5">
+
+    <Grid >
+        <DockPanel LastChildFill="True">
+            <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-            </Grid>
-            <ScrollViewer x:Name="NoteScrollView" DockPanel.Dock="Left" HorizontalAlignment="Left" Height="590" VerticalAlignment="Top" Width="200">
-                <StackPanel x:Name="NoteStackPanel" HorizontalAlignment="Stretch" Height="650" VerticalAlignment="Top">
-                    <TextBlock>
-                    First row
-                    </TextBlock>
-                    <TextBlock>
-                    Second row
-                    </TextBlock>
+                <StackPanel Grid.Column ="0" HorizontalAlignment="Left"  Width="200">
+                    <Button x:Name="NoteCreate" Content="Create note" Click="NoteCreate_Click"/>
+                    <Button x:Name="NoteDelete" Content="Delete note" Click="NoteDelete_Click"/>
                 </StackPanel>
-            </ScrollViewer>
-            <StackPanel Margin="10,0,0,0" DockPanel.Dock="Top" Orientation="Vertical" Width="300" HorizontalAlignment="Left">
-                <WrapPanel>
-                    <Label>Заголовок</Label>
-                    <TextBlock x:Name="TitleBlock" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        Hello from Title
-                    </TextBlock>
-                </WrapPanel>
-                <WrapPanel>
-                    <Label>Категория</Label>
-                    <TextBlock x:Name="CategoryBlock" Margin="10,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        Hello from Category
-                    </TextBlock>
-                </WrapPanel>
+
+                <StackPanel Grid.Column ="1" HorizontalAlignment="Right"  Width="200">
+                    <Button x:Name="SaveBtn" Content="Save" Click="SaveBtn_Click"/>
+                    <Button x:Name="LogoffBtn" Content="Exit" Click="LogoffBtn_Click"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Left">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Note list" Height="24"/>
+                <!--<Border BorderBrush="Black" Background="White" BorderThickness="2" >-->
+                <ScrollViewer x:Name="NoteScrollView"  Height="586" Width="200" 
+                          Margin="10,0,0,0" CanContentScroll="True" >
+                    <ListBox x:Name="NoteListBox" HorizontalAlignment="Stretch" 
+                             VerticalAlignment="Top" Height="586"
+                             SelectionChanged="NoteListBox_SelectionChanged"
+                             ItemsSource="{Binding Titles, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             />
+                </ScrollViewer>
+                <!--</Border>-->
             </StackPanel>
-            
-            <!--<StackPanel Height="50" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right">
-                <Button x:Name="LogoffBtn" Content="Выйти"/>
-                <Button x:Name="SaveBtn" Content="Сохранить"/>
-            </StackPanel>-->
+
+
+
+            <Grid DockPanel.Dock="Top" VerticalAlignment="Bottom" Margin="5,10,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="390*"/>
+                    <ColumnDefinition Width="180*"/>
+                    <ColumnDefinition Width="200*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column ="0" Margin="0,0,0,0"  Orientation="Vertical" HorizontalAlignment="Left" Width="440" >
+                    <WrapPanel>
+                        <Label Width="61">Title:</Label>
+                        <TextBox x:Name="NoteTitleBox"  Width="231" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                 Text="{Binding NoteTitle, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 />
+
+
+                    </WrapPanel>
+                    <WrapPanel>
+                        <Label>Category:</Label>
+                        <ComboBox Height="22" Name="CagegoryList" Width="231" IsEditable="True" SelectedIndex="0" 
+                                  TextBoxBase.TextChanged="CagegoryList_TextChanged"
+                                  SelectionChanged="CagegoryList_SelectionChanged"
+                                  ItemsSource="{Binding NoteCategories,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedValuePath="Id">
+                            <!--<ComboBoxItem Content="First Category"/>
+                            <ComboBoxItem Content="Second Category"/>-->
+                        </ComboBox>
+                        <Button x:Name="CategoryAdd" Content="Save/Add" Margin="5,0,5,0" Width="61" Height="20" Click="CategoryAdd_Click"/>
+                        <Button x:Name="CategoryDelete" Content="Remove" Width="53" Height="20" Click="CategoryDelete_Click"/>
+                    </WrapPanel>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Label Margin="8,0,0,0">Shared users:</Label>
+                    <wpfTool:CheckComboBox x:Name="_combo" 
+                             VerticalAlignment="Center" 
+                             
+                                           Height="22"
+                                           MaxDropDownHeight="300" Margin="8,0,8,0"
+                                           />
+                    <!--DisplayMemberPath="Color"
+                             ValueMemberPath="Level"
+                             SelectedValue="{Binding SelectedValue}"
+                             SelectedItem="{Binding SelectedItems}"-->
+
+                </StackPanel>
+
+                <StackPanel Grid.Column ="2" Margin="0,0,0,0" Orientation="Vertical" Width="226" HorizontalAlignment="Right">
+                    <WrapPanel HorizontalAlignment="Left">
+                        <Label Width="86">Date created:</Label>
+                        <TextBlock x:Name="NoteDateCreate" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Text="{Binding  NoteDateCreated}" />
+
+                    </WrapPanel>
+                    <WrapPanel HorizontalAlignment="Left">
+                        <Label>Date changed:</Label>
+                        <TextBlock x:Name="NoteDateChanged" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Text="{Binding  NoteDateCreated}"
+                                   />
+                    </WrapPanel>
+                </StackPanel>
+            </Grid>
+
             <!--<StackPanel Height="25" VerticalAlignment="Center" Width="150" DockPanel.Dock="Bottom" HorizontalAlignment="Right">
                 <Button x:Name="SaveBtn" Content="Сохранить"/>
             </StackPanel>-->
-            <StackPanel Margin="10,10,0,0">
-                <TextBlock>Center</TextBlock>
+            <StackPanel Margin="10,10,10,0" DockPanel.Dock="Right" >
+                <TextBox x:Name="NoteContent" Height="537" Text="{Binding NoteContent, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </DockPanel>
     </Grid>

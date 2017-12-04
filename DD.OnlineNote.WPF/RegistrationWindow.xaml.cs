@@ -23,11 +23,10 @@ namespace DD.OnlineNote.WPF
     public partial class RegistrationWindow : Window 
     {
         private ServiceProvider provider;
-        private UserToCreate user;
         public RegistrationWindow()
         {
             InitializeComponent();
-            provider = ServiceProvider.GetProvider(string.Empty);
+            provider = ServiceProvider.GetProvider();
         }
 
         private async void button_Click(object sender, RoutedEventArgs e)
@@ -52,10 +51,10 @@ namespace DD.OnlineNote.WPF
                 UserAlredyExist.IsOpen = true;
                 return;
             }
-            User usr = new User() { Name = LoginBox.Text };
+            User usr = new User() { Name = LoginBox.Text , Password = PasswordBox.Password };
             usr = await provider.CreateUser(usr);
 
-            if (usr.Id == default(Guid))
+            if (usr == null || usr.Id == default(Guid))
             {
                 CreateUserError.IsOpen = true;
                 return;

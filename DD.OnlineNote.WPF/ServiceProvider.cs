@@ -12,9 +12,18 @@ namespace DD.OnlineNote.WPF
 {
     public class ServiceProvider
     {
+#if DEBUG
+        const string connectionString = "http://localhost:62140/";
+#else
+        const string connectionString = "http://onlinenote.azurewebsites.net/";
+#endif
         private static ServiceProvider instance;
         public readonly HttpClient Client;
 
+        //static ServiceProvider()
+        //{
+        //    instance = new ServiceProvider(connectionString);
+        //}
 
         private ServiceProvider(string ConnectionString)
         {
@@ -23,17 +32,17 @@ namespace DD.OnlineNote.WPF
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public static ServiceProvider GetProvider(string ConnectionString)
+        public static ServiceProvider GetProvider()
         {
-            if(instance == null)
-                instance = new ServiceProvider(ConnectionString);
+            if (instance == null)
+                instance = new ServiceProvider(connectionString);
 
             return instance;
         }
 
-        public async Task<bool> CheckLogin(string loginName)
+        public async Task<bool> CheckLogin(string loginUsrName)
         {
-            HttpResponseMessage Response = await Client.PostAsJsonAsync("api/users/check", loginName);
+            HttpResponseMessage Response = await Client.PostAsJsonAsync("api/users/check", loginUsrName);
             if(Response.StatusCode == HttpStatusCode.OK)
             {
                 return await Response.Content.ReadAsAsync<bool>();
@@ -44,10 +53,31 @@ namespace DD.OnlineNote.WPF
                 return false;
             }
         }
-
-        public Note CreateNote(Note note)
+        public async Task<User> Login(User loginUsr)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage Response = await Client.PostAsJsonAsync("api/users/login", loginUsr);
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                return await Response.Content.ReadAsAsync<User>();
+            }
+            else
+            {
+                //ошибка с соединением
+                return null;
+            }
+        }
+        public async Task<Note> CreateNote(Note note)
+        {
+            HttpResponseMessage Response = await Client.PostAsJsonAsync("api/note/Create", note);
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                return await Response.Content.ReadAsAsync<Note>();
+            }
+            else
+            {
+                //ошибка с соединением
+                return null;
+            }
         }
 
         public async Task<User> CreateUser(User user)
@@ -64,14 +94,32 @@ namespace DD.OnlineNote.WPF
             }
         }
 
-        public Category CreateCategory(Guid userId, string name)
+        public async Task<Category> CreateCategory(Guid userId, string name)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage Response = await Client.PostAsJsonAsync($"api/Categories/{userId}", name);
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                return await Response.Content.ReadAsAsync<Category>();
+            }
+            else
+            {
+                //ошибка с соединением
+                return null;
+            }
         }
 
-        public void DeleteCategory(Guid categoriesId)
+        public async Task DeleteCategory(Guid categoriesId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage Response = await Client.DeleteAsync($"api/Categories/{categoriesId}");
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                await Response.Content.ReadAsAsync<User>();
+            }
+            else
+            {
+                //ошибка с соединением
+                
+            }
         }
 
         public IEnumerable<User> GetSharedUsers(Guid noteId)
@@ -79,14 +127,23 @@ namespace DD.OnlineNote.WPF
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Category> GetUserCategories(Guid userId)
+        public async Task<IEnumerable<Category>> GetUserCategories(Guid userId)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage Response = await Client.GetAsync($"api/users/{userId}/categories");
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                return await Response.Content.ReadAsAsync<IEnumerable<Category>>();
+            }
+            else
+            {
+                //ошибка с соединением
+                return null;
+            }
         }
 
         public async Task<IEnumerable<Note>> GetUserNotes(Guid userId)
         {
-            HttpResponseMessage Response = await Client.GetAsync("api/users/check/userId");
+            HttpResponseMessage Response = await Client.GetAsync($"api/note/getusernotes/{userId}");
             if (Response.StatusCode == HttpStatusCode.OK)
             {
                 return await Response.Content.ReadAsAsync<IEnumerable<Note>>();
@@ -98,9 +155,32 @@ namespace DD.OnlineNote.WPF
             }
         }
 
-        public Note UpdateNote(Note note)
+        public async Task<Note> UpdateNote(Note note)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage Response = await Client.PostAsJsonAsync("api/note", note);
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                return await Response.Content.ReadAsAsync<Note>();
+            }
+            else
+            {
+                //ошибка с соединением
+                return null;
+            }
+        }
+        public async Task<Category> UpdateCategory(Category updateCategory)
+        {
+            
+            HttpResponseMessage Response = await Client.PostAsJsonAsync($"api/Categories/", updateCategory);
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                return await Response.Content.ReadAsAsync<Category>();
+            }
+            else
+            {
+                //ошибка с соединением
+                return null;
+            }
         }
 
         bool DeleteUser(Guid Noteid)

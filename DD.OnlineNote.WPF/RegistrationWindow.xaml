@@ -12,38 +12,38 @@
     </Window.Resources>
 
     <Grid>
-        <Popup x:Name="EmptyLogin" StaysOpen="False" Placement="Custom" PlacementTarget="{Binding ElementName=bindLabel}" MaxWidth="300" 
+        <Popup x:Name="EmptyLogin" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=LoginBox}" MaxWidth="300" 
          AllowsTransparency="True"  >
             <TextBlock TextWrapping="Wrap" Width="143" Height="49" HorizontalAlignment="Left" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
             Не заполнено имя пользователя!
             </TextBlock>
         </Popup>
-        <Popup x:Name="passwordDontmach" StaysOpen="False" Placement="Custom" PlacementTarget="{Binding ElementName=PasswordBox}" MaxWidth="300"
+        <Popup x:Name="passwordDontmach" StaysOpen="False" Placement="Bottom" PlacementTarget="{Binding ElementName=PasswordBox}" MaxWidth="300"
          AllowsTransparency="True"  >
-            <TextBlock TextWrapping="Wrap" Width="92" Height="49" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
+            <TextBlock TextWrapping="Wrap" Width="120" Height="49" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
             Пароли не совпадают!
             </TextBlock>
         </Popup>
-        <Popup x:Name="empryPassword" StaysOpen="False" Placement="Center" MaxWidth="300"
+        <Popup x:Name="empryPassword" StaysOpen="False" Placement="Top" PlacementTarget="{Binding ElementName=button}" MaxWidth="300"
          AllowsTransparency="True"  >
-            <TextBlock TextWrapping="Wrap" Width="91" Height="47" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
+            <TextBlock TextWrapping="Wrap" Width="138" Height="47" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
             Пароль не заполнен!
             </TextBlock>
         </Popup>
-        <Popup x:Name="CreateUserError" StaysOpen="False" Placement="Center" MaxWidth="300"
+        <Popup x:Name="CreateUserError" StaysOpen="False" Placement="Top" PlacementTarget="{Binding ElementName=button}" MaxWidth="300"
          AllowsTransparency="True"  >
             <TextBlock TextWrapping="Wrap" Width="142" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
             Ошибка при создании пользователя!
             </TextBlock>
         </Popup>
-        <Popup x:Name="UserAlredyExist" StaysOpen="False" Placement="Center" MaxWidth="300"
+        <Popup x:Name="UserAlredyExist" StaysOpen="False" Placement="Top" PlacementTarget="{Binding ElementName=button}" MaxWidth="300"
          AllowsTransparency="True"  >
             <TextBlock TextWrapping="Wrap" Width="142" Height="64" HorizontalAlignment="Center" VerticalAlignment="Center" Background="LightCoral" Opacity="0.9" FontSize="16">
             Такой пользователь уже существует!
             </TextBlock>
         </Popup>
         <StackPanel Margin="15">
-            <Label HorizontalAlignment="Center">Регистрация</Label>
+            <Label x:Name="RegLabel" HorizontalAlignment="Center">Регистрация</Label>
             <WrapPanel>
                 <Label x:Name="bindLabel">Имя пользователя:</Label>
                 <TextBox x:Name="LoginBox" Text="{Binding LoginBox}" Width="120" Margin="10,0,0,0" FocusManager.LostFocus="LoginBox_LostFocus"/>

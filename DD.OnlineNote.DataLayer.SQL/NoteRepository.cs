@@ -38,15 +38,14 @@ namespace DD.OnlineNote.DataLayer.SQL
                     command.Parameters.AddWithValue("@Content", note.Content);
                     command.Parameters.AddWithValue("@Owner", note.Owner.Id);
                     command.Parameters.AddWithValue("@DateCreated", note.DateCreated);
-                    command.Parameters.AddWithValue("@DateChanged", note.DateChanged);
-                    command.Parameters.AddWithValue("@CategoryName", note.Categories.Single().Id);
+                    command.Parameters.AddWithValue("@DateChanged", note.DateCreated); //DateCreated == DateChanged
+                    command.Parameters.AddWithValue("@CategoryName", note.Categories.FirstOrDefault().Id);
                     command.ExecuteNonQuery();
 
                     return note;
                 }
             }
         }
-
         public bool Delete(Guid NoteId)
         {
            using (var sqlConnection = new SqlConnection(_connectionString))
@@ -60,8 +59,7 @@ namespace DD.OnlineNote.DataLayer.SQL
                 }
             }
             return Get(NoteId) == null ? true : false;
-        }
-        
+        }        
         public IEnumerable<Note> GetUserNotes(Guid userId)
         {
             using (var sqlConnection = new SqlConnection(_connectionString))
@@ -93,7 +91,6 @@ namespace DD.OnlineNote.DataLayer.SQL
                 }
             }
         }
-
         public Note UpdateNote(Note note)
         {
             using (var sqlConnection = new SqlConnection(_connectionString))
@@ -105,14 +102,13 @@ namespace DD.OnlineNote.DataLayer.SQL
                     command.Parameters.AddWithValue("@id", note.Id);
                     command.Parameters.AddWithValue("@Title", note.Title);
                     command.Parameters.AddWithValue("@Content", note.Content);
-                    command.Parameters.AddWithValue("@DateChanged", note.DateChanged);
+                    command.Parameters.AddWithValue("@DateChanged", DateTime.Now);
                     command.Parameters.AddWithValue("@CategoryName", note.Categories?.Single()?.Id);
                     command.ExecuteNonQuery();
                 }
             }
             return Get(note.Id);
         }
-
         public IEnumerable<User> GetSharedUsers(Guid noteId)
         {
             using (var sqlConnection = new SqlConnection(_connectionString))

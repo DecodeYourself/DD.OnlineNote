@@ -28,22 +28,24 @@ namespace DD.OnlineNote.WPF
         {
             InitializeComponent();
             currentBrush = this.Background;
-#if DEBUG
-            provider = ServiceProvider.GetProvider("http://localhost:62140/");
-#else
-            provider = ServiceProvider.GetProvider("http://onlinenote.azurewebsites.net/");
-#endif
+            provider = ServiceProvider.GetProvider();
         }
 
-        private async  void btnLogin_Click(object sender, RoutedEventArgs e)
+        private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(loginBox.Text))
             {
-                popupFillLogin.IsOpen = true;
+                popupNotFillLogin.IsOpen = true;
             }
-            else if( await provider.CheckLogin(loginBox.Text))
+            else if(string.IsNullOrEmpty(passwordBox.Password))
             {
-                Main main = new Main();
+                popupNotFillPassword.IsOpen = true;
+            }
+
+            User usr = await provider.Login(new User { Name = loginBox.Text, Password = passwordBox.Password });
+            if (usr != null)
+            {
+                Main main = new Main(usr.Id);
                 main.Title = $"OnlineNote, user: {loginBox.Text}";
                 main.Show();
                 //popupWelcom.IsOpen = true;
@@ -51,7 +53,7 @@ namespace DD.OnlineNote.WPF
             }
             else
             {
-                popupNotFoundUser.IsOpen = true;
+                popupIncorretUserOrPswd.IsOpen = true;
             }
 
         }

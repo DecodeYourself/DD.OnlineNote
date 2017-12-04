@@ -51,6 +51,15 @@ namespace DD.OnlineNote.WebApi.Controllers
             return _categoryRepository.GetUserCategories(userId);
         }
 
+        [WebExceptionFilters]
+        [HttpPost]
+        [Route("api/Categories")]
+        public Category UpdateNote([FromBody]Category category)
+        {
+            Logger.Log.Instance.Trace("Обновление категорий с id", category.Id);
+            return _categoryRepository.Update(category);
+        }
+
         //[WebExceptionFilters]
         //[HttpGet]
         //[Route("api/Categories")]

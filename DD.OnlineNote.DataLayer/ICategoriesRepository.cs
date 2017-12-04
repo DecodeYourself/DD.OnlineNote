@@ -13,7 +13,7 @@ namespace DD.OnlineNote.DataLayer
         Category Create(Guid userId, string name);
         void Delete(Guid categoriesId);
         IEnumerable<Category> GetUserCategories(Guid userId);
-
+        Category Update(Category ChangedCategory);
         //Category Get(Guid categoriesId);
     }
 
