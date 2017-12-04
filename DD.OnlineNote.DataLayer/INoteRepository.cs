@@ -14,5 +14,7 @@ namespace DD.OnlineNote.DataLayer
         IEnumerable<Note> GetUserNotes(Guid userId);
         Note UpdateNote(Note note);
         IEnumerable<User> GetSharedUsers(Guid noteId);
+        Guid GetCategoryNameByNoteId(Guid NoteId);
+
     }
 }

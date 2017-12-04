@@ -35,10 +35,19 @@
                 <ScrollViewer x:Name="NoteScrollView"  Height="586" Width="200" 
                           Margin="10,0,0,0" CanContentScroll="True" >
                     <ListBox x:Name="NoteListBox" HorizontalAlignment="Stretch" 
-                             VerticalAlignment="Top" Height="586"
+                             VerticalAlignment="Top" Height="566"
                              SelectionChanged="NoteListBox_SelectionChanged"
-                             ItemsSource="{Binding Titles, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             />
+                             ItemsSource="{Binding Titles, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                             DisplayMemberPath="Value"
+                             SelectedValuePath="Key"
+                             >
+                        <!--<ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Value}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>-->
+                    </ListBox>
+
                 </ScrollViewer>
                 <!--</Border>-->
             </StackPanel>
@@ -56,8 +65,8 @@
                         <Label Width="61">Title:</Label>
                         <TextBox x:Name="NoteTitleBox"  Width="231" HorizontalAlignment="Center" VerticalAlignment="Center"
                                  Text="{Binding NoteTitle, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                 />
-
+                                ></TextBox>
+                       
 
                     </WrapPanel>
                     <WrapPanel>
@@ -98,7 +107,7 @@
                     <WrapPanel HorizontalAlignment="Left">
                         <Label>Date changed:</Label>
                         <TextBlock x:Name="NoteDateChanged" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Text="{Binding  NoteDateCreated}"
+                                   Text="{Binding  NoteDateChanged}"
                                    />
                     </WrapPanel>
                 </StackPanel>

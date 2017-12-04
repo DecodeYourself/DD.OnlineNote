@@ -37,8 +37,8 @@ namespace DD.OnlineNote.DataLayer.SQL
                     command.Parameters.AddWithValue("@Title", note.Title);
                     command.Parameters.AddWithValue("@Content", note.Content);
                     command.Parameters.AddWithValue("@Owner", note.Owner.Id);
-                    command.Parameters.AddWithValue("@DateCreated", note.DateCreated);
-                    command.Parameters.AddWithValue("@DateChanged", note.DateCreated); //DateCreated == DateChanged
+                    command.Parameters.AddWithValue("@DateCreated", DateTime.Now);
+                    command.Parameters.AddWithValue("@DateChanged", DateTime.Now); //DateCreated == DateChanged
                     command.Parameters.AddWithValue("@CategoryName", note.Categories.FirstOrDefault().Id);
                     command.ExecuteNonQuery();
 
@@ -167,6 +167,28 @@ namespace DD.OnlineNote.DataLayer.SQL
                 }
             }
            
+        }
+
+        public Guid GetCategoryNameByNoteId(Guid NoteId)
+        {
+            using (var sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+                using (var command = sqlConnection.CreateCommand())
+                {
+                    command.CommandText = "select CategoryName from Note where id = @id";
+                    command.Parameters.AddWithValue("@id", NoteId);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            return new Guid();
+
+                        reader.Read();
+                        return reader.GetGuid(reader.GetOrdinal("CategoryName"));
+
+                    }
+                }
+            }
         }
     }
 }

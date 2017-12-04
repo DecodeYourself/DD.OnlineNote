@@ -151,5 +151,7 @@ namespace DD.OnlineNote.DataLayer.SQL
             }
             return GetById(ChangedCategory.Id);
         }
+
+       
     }
 }

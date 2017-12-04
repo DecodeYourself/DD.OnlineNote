@@ -22,12 +22,42 @@ namespace DD.OnlineNote.WPF
     public partial class Main : Window
     {
         Guid owner;
+        Guid selectedNote;
         ServiceProvider provider;
         Category newCategory;
+        IEnumerable<Note> notes;
 
-        public IEnumerable<Note> Notes { get; set; }
+        public IEnumerable<Note> Notes { get
+            {
+                return notes;
+            }
+            set
+            {
+                
+                notes = value;
+                if(UsrNotes != null)
+                    UsrNotes.SetTitles(notes);
+            }
+        }
         public UserNotes UsrNotes { get; set; }
 
+        public Guid SelectedNote {
+            get
+            {
+                return selectedNote;
+            }
+            set
+            {
+                selectedNote = value;
+
+                if (UsrNotes != null)
+                    UsrNotes.Setter(Notes.Where(x => x.Id == selectedNote).FirstOrDefault());
+                else
+                    UsrNotes = Notes.Select(x => new UserNotes(x)).FirstOrDefault();
+
+                ReturnFocuseToNote();
+            }
+        }
 
         public Main(Guid usrOwner)
         {
@@ -39,36 +69,84 @@ namespace DD.OnlineNote.WPF
 
         }
 
-        private void FillNoteList()
+        private async Task FillNoteList()
         {
+            await NotesUpd();
             UsrNotes = Notes.Select(x => new UserNotes(x)).FirstOrDefault();
-            UsrNotes.SetTitles(Notes);
-            NoteListBox.ItemsSource = UsrNotes.Titles;//Notes.Select(x => x.Title).ToArray();
-            NoteListBox.SelectedIndex = NoteListBox.Items.Count >= 0 ? 0 : -1;
+            if (UsrNotes == null)
+                UsrNotes = new UserNotes(null);
             DataContext = UsrNotes;
-
+            UsrNotes.SetTitles(Notes);
+            NoteListBox.SelectedIndex = NoteListBox.Items.Count > 0 ? NoteListBox.Items.Count - 1 : -1;
+            await ReturnFocuseToCategory();
         }
 
+        private async Task NotesUpd()
+        {
+            Notes = await provider.GetUserNotes(owner);
+        }
+        private async Task ReturnFocuseToCategory()
+        {
+            if (SelectedNote != default(Guid))
+            {
+                Guid categoryName = await provider.GetCategoryNameByNoteId(SelectedNote);
+
+                Category returnFocus = UsrNotes.NoteCategories.Where(x => x.Id == categoryName).FirstOrDefault();
+                CagegoryList.SelectedIndex = returnFocus == null ? -1 : UsrNotes.NoteCategories.LastIndexOf(returnFocus);
+            }
+            else
+            {
+                CagegoryList.SelectedIndex = 0;
+            }
+
+        }
+        private void ReturnFocuseToNote()
+        {
+            NoteListBox.SelectedIndex = (NoteListBox.Items.SourceCollection as Dictionary<Guid, string>).Select(x => x.Key).ToList().IndexOf(SelectedNote);
+
+        }
         private async void MyWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            await RefreshNotes();
-            DataContext = UsrNotes;
+            await FillNoteList();
+
 
         }
 
         private async Task RefreshNotes()
         {
-            Notes = await provider.GetUserNotes(owner);
+            await NotesUpd();
 
             if (UsrNotes != null)
+            {
                 UsrNotes.Setter(Notes.FirstOrDefault());
+                UsrNotes.SetTitles(Notes);
+            }
             else
                 UsrNotes = Notes.Select(x => new UserNotes(x)).FirstOrDefault();
 
-            NoteListBox.ItemsSource = UsrNotes.Titles;//Notes.Select(x => x.Title).ToArray();
-            NoteListBox.SelectedIndex = NoteListBox.Items.Count >= 0 ? 0 : -1;
+            await ReturnFocuseToCategory();
 
-            //FillNoteList();
+           
+            
+        }
+        private async Task FillSelectedNotes(Guid NoteId)
+        {
+            Note slctedNote = Notes.Where(x => x.Id == NoteId).FirstOrDefault();
+            if (slctedNote == null)
+            {
+                await NotesUpd();
+                slctedNote = Notes.Where(x => x.Id == NoteId).FirstOrDefault();
+
+                if (slctedNote == null)
+                    return;
+
+                UsrNotes.Setter(slctedNote);
+            }
+            else
+                UsrNotes.Setter(slctedNote);
+
+            UsrNotes.SetTitles(Notes);
+            await ReturnFocuseToCategory();
         }
 
         private void LogoffBtn_Click(object sender, RoutedEventArgs e)
@@ -89,14 +167,20 @@ namespace DD.OnlineNote.WPF
                 Categories = await provider.GetUserCategories(owner),
                 SharedNote = null
             };
-            await provider.CreateNote(newNote);
+            newNote = await provider.CreateNote(newNote);
+            SelectedNote = newNote.Id;
             await RefreshNotes();
-            NoteListBox.SelectedIndex = NoteListBox.Items.Count - 1;
+            ReturnFocuseToNote();
+
         }
 
-        private void NoteDelete_Click(object sender, RoutedEventArgs e)
+        private async void NoteDelete_Click(object sender, RoutedEventArgs e)
         {
-            UsrNotes.Setter(Notes.Select(x => x).First());
+            await provider.DeleteNote(SelectedNote);
+            await NotesUpd();
+            UsrNotes.Setter(Notes.Select(x => x).FirstOrDefault());
+            UsrNotes.SetTitles(Notes);
+            ReturnFocuseToNote();
         }
 
         private void CagegoryList_TextChanged(object sender, RoutedEventArgs e)
@@ -151,14 +235,16 @@ namespace DD.OnlineNote.WPF
 
         private async void CategoryDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(newCategory.Name) && newCategory.Id == default(Guid))
+            if (string.IsNullOrEmpty(newCategory.Name) && newCategory.Id == default(Guid) && CagegoryList.SelectedIndex == -1)
             {
                 Category returnFocus = UsrNotes.NoteCategories.Where(x => x.Id == newCategory.Id).FirstOrDefault();
                 CagegoryList.SelectedIndex = returnFocus == null ? -1 : UsrNotes.NoteCategories.LastIndexOf(returnFocus);
                 return;
             }
+            Guid selectedCategory = UsrNotes.NoteCategories[CagegoryList.SelectedIndex].Id;
+            
 
-            await provider.DeleteCategory(newCategory.Id);
+            await provider.DeleteCategory(selectedCategory);
             UsrNotes.UpdateCurrentCategoryList(await provider.GetUserCategories(owner));
 
             CagegoryList.SelectedIndex = 0;
@@ -168,9 +254,10 @@ namespace DD.OnlineNote.WPF
 
         private async void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(newCategory.Name) && newCategory.Id == default(Guid))
+            Category returnFocus;
+            if (string.IsNullOrEmpty(newCategory.Name) && newCategory.Id == default(Guid) && CagegoryList.SelectedIndex == -1)
             {
-                Category returnFocus = UsrNotes.NoteCategories.Where(x => x.Id == newCategory.Id).FirstOrDefault();
+                returnFocus = UsrNotes.NoteCategories.Where(x => x.Id == newCategory.Id).FirstOrDefault();
                 CagegoryList.SelectedIndex = returnFocus == null ? -1 : UsrNotes.NoteCategories.LastIndexOf(returnFocus);
             }
             if (CagegoryList.SelectedIndex == -1)
@@ -186,29 +273,41 @@ namespace DD.OnlineNote.WPF
                 Id = UsrNotes.NoteId,
                 Content = UsrNotes.NoteContent,
                 Title = UsrNotes.NoteTitle,
+                DateChanged = DateTime.Now,
                 Categories = _category
             };
-            UsrNotes.Setter(await provider.UpdateNote(savedNote));
+            savedNote = await provider.UpdateNote(savedNote);
+            selectedNote = savedNote.Id;
+            UsrNotes.Setter(savedNote);
+            await NotesUpd();
+            UsrNotes.SetTitles(Notes);
+            returnFocus = UsrNotes.NoteCategories.Where(x => x.Id == selectedCategory).FirstOrDefault();
+            CagegoryList.SelectedIndex = returnFocus == null ? -1 : UsrNotes.NoteCategories.LastIndexOf(returnFocus);
         }
 
-        private void NoteListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void NoteListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((e.Source as ListBox).SelectedIndex == -1)
                 return;
+            if(e.AddedItems.Count != 0 && (e.Source as ListBox).SelectedIndex != -1)
+            {
+                SelectedNote = ((KeyValuePair<Guid, string>)((object[])e.AddedItems)[0]).Key;
 
-            if (e.RemovedItems.Count != 0 && e.AddedItems.Count != 0) // Выбор другой категории
-                newCategory.Id = (e.AddedItems[0] as Category).Id;
-            else if (e.RemovedItems.Count != 0 && (e.Source as ComboBox).SelectedIndex == -1) // изменения текста в текущий категории
-                newCategory.Id = (e.RemovedItems[0] as Category).Id;
-            else if (e.RemovedItems.Count != 0 && (e.Source as ComboBox).SelectedIndex != -1) // удаление текущей
-                newCategory.Id = (e.RemovedItems[0] as Category).Id;
-            else if (e.AddedItems.Count != 0 && (e.Source as ComboBox).SelectedIndex != -1)// && newCategory.Id == default(Guid)) // selectedIndex установлен из кода
-                newCategory.Id = (e.AddedItems[0] as Category).Id;
+                await FillSelectedNotes(SelectedNote);
+            }
+            //if (e.RemovedItems.Count != 0 && e.AddedItems.Count != 0) // Выбор другой категории
+            //    newCategory.Id = (e.AddedItems[0] as Category).Id;
+            //else if (e.RemovedItems.Count != 0 && (e.Source as ListBox).SelectedIndex == -1) // изменения текста в текущий категории
+            //    newCategory.Id = (e.RemovedItems[0] as Category).Id;
+            //else if (e.RemovedItems.Count != 0 && (e.Source as ListBox).SelectedIndex != -1) // удаление текущей
+            //    newCategory.Id = (e.RemovedItems[0] as Category).Id;
+            //else if (e.AddedItems.Count != 0 && (e.Source as ListBox).SelectedIndex != -1)// && newCategory.Id == default(Guid)) // selectedIndex установлен из кода
+            //    newCategory.Id = (e.AddedItems[0] as Category).Id;
         }
     }
     public class UserNotes : INotifyPropertyChanged
     {
-        List<string> _Titles;
+        Dictionary<Guid,string> _Titles;
         string _NoteTitle;
         string _NoteContent;
         DateTime _NoteDateCreated;
@@ -217,7 +316,7 @@ namespace DD.OnlineNote.WPF
         List<User> _NoteSharedNote;
         public Guid NoteId { get; set; }
 
-        public List<string> Titles {
+        public Dictionary<Guid, string> Titles {
             get
             {
                 return _Titles;
@@ -303,6 +402,8 @@ namespace DD.OnlineNote.WPF
 
         public UserNotes(Note currentNote)
         {
+            if (currentNote == null)
+                return;
             NoteId = currentNote.Id;
             NoteTitle = currentNote.Title;
             NoteContent = currentNote.Content;
@@ -313,6 +414,8 @@ namespace DD.OnlineNote.WPF
         }
         public void Setter(Note currentNote)
         {
+            if (currentNote == null)
+                return;
             NoteId = currentNote.Id;
             NoteTitle = currentNote.Title;
             NoteContent = currentNote.Content;
@@ -320,14 +423,21 @@ namespace DD.OnlineNote.WPF
             NoteDateChanged = currentNote.DateChanged;
             NoteCategories = currentNote.Categories.ToList();
             NoteSharedNote = currentNote.SharedNote.ToList();
-        }
-        public void UpdateCurrentCategoryList(IEnumerable<Category> CategoryList)
+
+
+    }
+    public void UpdateCurrentCategoryList(IEnumerable<Category> CategoryList)
         {
             NoteCategories = CategoryList.ToList();
         }
         public void SetTitles(IEnumerable<Note> Notes)
         {
-            Titles = Notes.Select(x => x.Title).ToList();
+            
+            //foreach (Note item in Notes)
+            //{
+            //    Titles.Add(item.Id, item.Title);
+            //}
+            Titles = Notes.ToDictionary(x => x.Id,x=> x.Title);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -12,7 +12,7 @@ namespace DD.OnlineNote.WPF
 {
     public class ServiceProvider
     {
-#if DEBUG
+#if !DEBUG
         const string connectionString = "http://localhost:62140/";
 #else
         const string connectionString = "http://onlinenote.azurewebsites.net/";
@@ -111,17 +111,13 @@ namespace DD.OnlineNote.WPF
         public async Task DeleteCategory(Guid categoriesId)
         {
             HttpResponseMessage Response = await Client.DeleteAsync($"api/Categories/{categoriesId}");
-            if (Response.StatusCode == HttpStatusCode.OK)
-            {
-                await Response.Content.ReadAsAsync<User>();
-            }
-            else
-            {
-                //ошибка с соединением
-                
-            }
+           
         }
+        public async Task DeleteNote(Guid noteId)
+        {
+            HttpResponseMessage Response = await Client.DeleteAsync($"api/note/{noteId}");
 
+        }
         public IEnumerable<User> GetSharedUsers(Guid noteId)
         {
             throw new NotImplementedException();
@@ -152,6 +148,19 @@ namespace DD.OnlineNote.WPF
             {
                 //ошибка с соединением
                 return null;
+            }
+        }
+        public async Task<Guid> GetCategoryNameByNoteId(Guid noteId)
+        {
+            HttpResponseMessage Response = await Client.GetAsync($"api/note/GetCategoryName/{noteId}");
+            if (Response.StatusCode == HttpStatusCode.OK)
+            {
+                return await Response.Content.ReadAsAsync<Guid>();
+            }
+            else
+            {
+                //ошибка с соединением
+                return new Guid();
             }
         }
 
