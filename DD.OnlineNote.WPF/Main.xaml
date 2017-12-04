@@ -35,7 +35,7 @@
                 <ScrollViewer x:Name="NoteScrollView"  Height="586" Width="200" 
                           Margin="10,0,0,0" CanContentScroll="True" >
                     <ListBox x:Name="NoteListBox" HorizontalAlignment="Stretch" 
-                             VerticalAlignment="Top" Height="566"
+                             VerticalAlignment="Top" Height="576"
                              SelectionChanged="NoteListBox_SelectionChanged"
                              ItemsSource="{Binding Titles, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                              DisplayMemberPath="Value"

@@ -178,7 +178,10 @@ namespace DD.OnlineNote.WPF
         {
             await provider.DeleteNote(SelectedNote);
             await NotesUpd();
-            UsrNotes.Setter(Notes.Select(x => x).FirstOrDefault());
+            Note _note = Notes.Select(x => x).FirstOrDefault();
+            if (_note != null)
+                selectedNote = _note.Id;
+            UsrNotes.Setter(_note);
             UsrNotes.SetTitles(Notes);
             ReturnFocuseToNote();
         }
