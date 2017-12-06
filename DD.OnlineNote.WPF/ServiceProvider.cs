@@ -14,10 +14,10 @@ namespace DD.OnlineNote.WPF
     {
 #if !DEBUG
         //const string connectionString = "http://localhost:62140/";
-        const string connectionString = "http://onlinenote.azurewebsites.net/";
+        const string connectionString = "";
 
 #else
-        const string connectionString = "http://onlinenote.azurewebsites.net/";
+        const string connectionString = "";
 #endif
         private static ServiceProvider instance;
         public readonly HttpClient Client;
